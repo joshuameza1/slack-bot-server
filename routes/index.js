@@ -159,9 +159,9 @@ router.post("/slack/interactions", (req, res) => {
       //file: fs.createReadStream(''), // Optional, via multipart/form-data. If omitting this parameter, you MUST submit content 
       content: 'test', // Optional, File contents. If omitting this parameter, you must provide a `file`  
       filename: 'test.png', // Required  
-      fileType: 'auto', // Optional, See more file types in https://api.slack.com/types/file#file_types 
-      title: 'Test PNG', // Optional 
-      initial_comment: 'First comment about this file.', // Optional 
+      //fileType: 'auto', // Optional, See more file types in https://api.slack.com/types/file#file_types 
+      //title: 'Test PNG', // Optional 
+      //initial_comment: 'First comment about this file.', // Optional 
       channels: 'general' //Optional, If you want to put more than one channel, separate using comma, example: 'general,random' 
     };
 

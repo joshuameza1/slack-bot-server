@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "nodejslack": "^1.4.0",
+    "request": "^2.88.2",
     "slackbots": "^1.2.0"
   },
   "devDependencies": {
