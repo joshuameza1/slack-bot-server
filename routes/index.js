@@ -142,25 +142,29 @@ router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
   
   
-  const payload = JSON.parse(req.body.payload);
+  let payload = JSON.parse(req.body.payload);
 
   // view the payload on console
-  console.log(payload);
+  //console.log(payload);
 
   if (
     payload.type === "view_submission" &&
     payload.view.callback_id === "gfx"
   ) {
     
-    const user = payload.user;
-    const name = user.name;
-    const id = user.id;
+    let user = payload.user;
+    let name = user.name;
+    let id = user.id;
     
-    const { values } = payload.view.state;
-    const type = values.type.type.selected_option.value;
-    const line_one = values.line_one.line_one.value;
-    const line_two = values.line_two.line_two.value;
-    const chroma_or_alpha =
+    let { values } = payload.view.state;
+    let type = values.type.type.selected_option.value;
+    let line_one = values.line_one.line_one.value;
+    let line_two = values.line_two.line_two.value;
+    if (line_two == null) {
+      line_two = "";
+      console.log("changed null to nothing")
+    }
+    let chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
     
