@@ -11,32 +11,21 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
-  
-  const fileName = 'template_preview.json';
-  
-  fs.readFile(fileName, 'utf8', function (err,data) {
+
+  const fileName = "template_preview.json";
+
+  fs.readFile(fileName, "utf8", function(err, data) {
     if (err) {
       return console.log(err);
     }
-    var result = data.replace('*LineOne', 'abc');
-    
-    console.log(result);
+    var newData = data.replace("*LineOne", "abssfc");
 
-    fs.writeFile('preview.json', result, 'utf8', function (err) {
-       if (err) return console.log(err);
+    console.log(newData);
+
+    fs.writeFile("preview.json", newData, "utf8", function(err) {
+      if (err) return console.log(err);
     });
-
   });
-  
-  let rawdata = fs.readFileSync(fileName);
-  let data = JSON.parse(rawdata);
-  
-  let newData = data.toString().replace('*LineOne', 'Line One')  
-  console.log(newData);
-  
-  
-  
-  
 
   res.status(200).send("");
   (async () => {
@@ -214,8 +203,7 @@ router.post("/slack/interactions", (req, res) => {
         ]
       }
     };
-    
-    
+
     /*fs.writeFile("./input.json", JSON.stringify(data), function(err) {
       if (err) throw err;
       console.log("complete");
