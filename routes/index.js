@@ -1,3 +1,4 @@
+const Slack = require('nodejslack');
 const request = require('request');
 const express = require("express");
 require("dotenv").config();
@@ -152,19 +153,35 @@ router.post("/slack/interactions", (req, res) => {
     payload.view.callback_id === "gfx"
   ) {
     
-    request.post({
-    url: 'https://slack.com/api/files.upload',
-    formData: {
-        token: token,
-        title: "Image",
-        filename: "image.png",
-        filetype: "auto",
-        channels: ['T02CF4ECK4'],
-        file: fs.createReadStream('test.png'),
-    },
-}, function (err, response) {
-    console.log(JSON.parse(response.body));
-});
+    const slack = new Slack(process.env.SLACK_TOKEN);
+    
+    
+    const form = {
+      file: fs.createReadStream('test.png'), // Optional, via multipart/form-data. If omitting this parameter, you MUST submit content 
+      // content: 'Your text here', // Optional, File contents. If omitting this parameter, you must provide a `file`  
+      filename: 'test.png', // Required  
+      fileType: 'auto', // Optional, See more file types in https://api.slack.com/types/file#file_types 
+      title: 'Test PNG', // Optional 
+      initial_comment: 'First comment about this file.', // Optional 
+      channels: 'general' //Optional, If you want to put more than one channel, separate using comma, example: 'general,random' 
+    };
+
+    slack.fileUpload(form)
+    .then(function(response){
+
+        // Slack sends a json with a boolean var ok.  
+        // Error example : data = { ok: false, error: 'user_not_found'         } 
+        // Error example : data = { ok: true, file: 'user_not_found' } 
+        if(!response || !response.ok){
+            return Promise.reject(new Error('Something wrong happened during the upload.'));
+        }
+        console.log('Uploaded Successfully:',response);
+
+        return Promise.resolve(response);
+    })
+    .catch(function(err){
+        return err;
+    });
     
     
     const { values } = payload.view.state;
