@@ -11,6 +11,18 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
+  
+  
+  const fileName = '../assets/input.json';
+    const file = require(fileName);
+    
+    file.key = "new value";
+    
+    fs.writeFile(fileName, JSON.stringify(file), function writeJSON(err) {
+      if (err) return console.log(err);
+      console.log(JSON.stringify(file, null, 2));
+      console.log('writing to ' + fileName);
+    });
 
   res.status(200).send("");
   (async () => {
@@ -188,7 +200,9 @@ router.post("/slack/interactions", (req, res) => {
         ]
       }
     };
-    fs.writeFile("./input.json", JSON.stringify(data), function(err) {
+    
+    
+    /*fs.writeFile("./input.json", JSON.stringify(data), function(err) {
       if (err) throw err;
       console.log("complete");
     });
@@ -197,6 +211,7 @@ router.post("/slack/interactions", (req, res) => {
       let student = JSON.parse(data);
       console.log(student);
     });
+    */
 
     console.log(
       `type -----> ${type}`,
