@@ -8,13 +8,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "Kara Danielle"
+            "value": "test"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "Amazing Kisser"
+            "value": ""
         }
     ]
     ,
