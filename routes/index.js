@@ -13,13 +13,25 @@ router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
   
   const fileName = 'template_preview.json';
-  //const file = require(fileName);
+  
+  fs.readFile(fileName, 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    var result = data.replace('*LineOne', 'abc');
+    
+    console.log(result);
+
+    fs.writeFile('preview.json', result, 'utf8', function (err) {
+       if (err) return console.log(err);
+    });
+
+  });
   
   let rawdata = fs.readFileSync(fileName);
   let data = JSON.parse(rawdata);
   
-  let newData = data.toString().replace('*LineOne', 'Line One').
-  
+  let newData = data.toString().replace('*LineOne', 'Line One')  
   console.log(newData);
   
   
