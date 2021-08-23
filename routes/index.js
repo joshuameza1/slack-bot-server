@@ -170,8 +170,8 @@ router.post('/slack/interactions', (req, res) => {
     );
     fs.readFile('input.json', (err, data) => {
     if (err) throw err;
-      let student = JSON.parse(data);
-      console.log(student);
+    let student = JSON.parse(data);
+    console.log(student);
 });
 
     console.log(`type -----> ${type}`, `line one ----> ${line_one}`, `line two ----> ${line_two}`, `chroma or alpha ----> ${chroma_or_alpha}`);
