@@ -4,24 +4,38 @@ const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 
-const { App } = require('@slack/bolt')
+const SlackBot = require('slackbots');
 
 const token = process.env.SLACK_TOKEN;
-const signingsecret = process.env.SLACK_SIGNING_SECRET;
 
-const app = new App({
-  token: token,
-  signingSecret: signingsecret
-});
 
-(async () => {
-  const result = await app.client.chat.postMessage({
+
+const bot = new SlackBot({
     token: token,
-    channel: 'U02BJNW2U9L',
-    text: 'hello world'
-  });
-  console.log(result)
-})();
+    name: 'GFX_PKG_Exporter'
+})
+
+
+
+// Start Handler
+bot.on('start', () => {
+    const params = {
+        icon_emoji: ':robot_face:'
+    }
+
+    bot.postMessageToChannel(
+        'random',
+        'Get inspired while working with @inspirenuggets',
+        params
+    );
+})
+
+// Error Handler
+bot.on('error', (err) => {
+    console.log(err);
+})
+
+
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
