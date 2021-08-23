@@ -4,9 +4,7 @@ const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 
-
 const token = process.env.SLACK_TOKEN;
-
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
@@ -136,12 +134,9 @@ router.post("/slack/gfx", (req, res) => {
   })();
 });
 
-
 router.post("/slack/interactions", (req, res) => {
-  
   res.status(200).send();
-  
-  
+
   let payload = JSON.parse(req.body.payload);
 
   // view the payload on console
@@ -151,23 +146,32 @@ router.post("/slack/interactions", (req, res) => {
     payload.type === "view_submission" &&
     payload.view.callback_id === "gfx"
   ) {
-    
     let user = payload.user;
     let name = user.name;
     let id = user.id;
-    
+
     let { values } = payload.view.state;
     let type = values.type.type.selected_option.value;
     let line_one = values.line_one.line_one.value;
     let line_two = values.line_two.line_two.value;
     if (line_two == null) {
       line_two = "";
-      console.log("changed null to nothing")
     }
     let chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
-    
+    try {
+      // Call the chat.postMessage method using the WebClient
+      const result = web.chat.postMessage({
+        channel: id,
+        text: "Hey " + name + "! Your " + type + " for " + line_one + " is being rendered and will be uploaded here shortly!"
+      });
+
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+
     const fileName = "template_render.json";
 
     fs.readFile(fileName, "utf8", function(err, data) {
@@ -179,7 +183,6 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", line_one)
         .replace("*LINETWO*", line_two);
-        
 
       //console.log(newData);
 

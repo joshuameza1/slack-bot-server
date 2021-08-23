@@ -1,14 +1,14 @@
 {
     "template": {
         "src": "file:///Users/joshua.meza/Dropbox/NexRender/02_ProjectFiles/AfterEffects/GFX5_Overlays.aep",
-        "composition": "GFX5_HostingSlide_Alpha_Temp"
+        "composition": "GFX5_Nameslide_Alpha_Temp"
     },
     "assets": [
         {
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "test"
+            "value": "resr"
         },
         {
             "type": "data",
