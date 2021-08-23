@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const router = express.Router();
 const { WebClient } = require('@slack/web-api');
+const fs = require('fs');
 
 const token = process.env.SLACK_TOKEN;
 
@@ -152,6 +153,10 @@ router.post('/slack/interactions', (req, res) => {
     const line_two = values.line_two.line_two.value;
     const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
     
+    const obj = {
+      table: []
+    };
+    fs.writeFile('myjsonfile.json', json, 'utf8', callback);
 
     console.log(`type -----> ${type}`, `line one ----> ${line_one}`, `line two ----> ${line_two}`, `chroma or alpha ----> ${chroma_or_alpha}`);
   }
