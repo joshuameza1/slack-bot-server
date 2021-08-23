@@ -12,13 +12,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "First & Last Name"
+            "value": "*LineOne"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "Title and Position"
+            "value": "*LineTwo"
         }
     ]
     ,

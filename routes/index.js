@@ -12,13 +12,16 @@ const web = new WebClient(token, { retries: 0 });
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
   
-  const fileName = '../preview.json';
+  const fileName = 'template_preview.json';
   //const file = require(fileName);
   
   let rawdata = fs.readFileSync(fileName);
   let data = JSON.parse(rawdata);
   
-  console.log(data);
+  let newData = data.toString().replace('*LineOne', 'Line One').
+  
+  console.log(newData);
+  
   
   
   
