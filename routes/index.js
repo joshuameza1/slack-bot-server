@@ -187,9 +187,27 @@ router.post("/slack/interactions", (req, res) => {
       //console.log(newData);
 
       fs.writeFile("render.json", newData, "utf8", function(err) {
-        if (err) return console.log(err);
+        if (err) return console.log(err);   
       });
     });
+    
+    try {
+      // Call the files.upload method using the WebClient
+      const result = web.files.upload({
+        // channels can be a list of one to many strings
+        channels: id,
+        initial_comment: "Here\'s your " + type + "! :smile:",
+        // Include your filename in a ReadStream here
+        file: fs.createReadStream('render.json')
+      });
+
+      console.log(result);
+    }
+    catch (error) {
+      console.error(error);
+    }
+    
+    
   }
 });
 
