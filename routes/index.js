@@ -134,9 +134,12 @@ router.post("/slack/gfx", (req, res) => {
   })();
 });
 
-router.post("/slack/interactions", (req, res) => {
-  res.status(200).send();
 
+router.post("/slack/interactions", (req, res) => {
+  
+  res.status(200).send();
+  
+  
   const payload = JSON.parse(req.body.payload);
 
   // view the payload on console
