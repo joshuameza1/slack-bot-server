@@ -147,16 +147,32 @@ router.post('/slack/interactions', (req, res) => {
     payload.type === 'view_submission' &&
     payload.view.callback_id === 'gfx'
   ) {
-    const { values } = payload.view.state;
-    const type = values.type.type.selected_option.value;
-    const line_one = values.line_one.line_one.value;
-    const line_two = values.line_two.line_two.value;
-    const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
+  const { values } = payload.view.state;
+  const type = values.type.type.selected_option.value;
+  const line_one = values.line_one.line_one.value;
+  const line_two = values.line_two.line_two.value;
+  const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
     
-    const obj = {
-      table: []
-    };
-    fs.writeFile('myjsonfile.json', json, 'utf8', callback);
+  var data = {}
+    data.table = []
+  var i;
+    for (i=0; i <26 ; i++){
+       var obj = {
+           id: i,
+           square: i * i
+       }
+       data.table.push(obj)
+    }
+      fs.writeFile ("input.json", JSON.stringify(data), function(err) {
+         if (err) throw err;
+      console.log('complete');
+        }
+    );
+    fs.readFile('input.json', (err, data) => {
+    if (err) throw err;
+      let student = JSON.parse(data);
+      console.log(student);
+});
 
     console.log(`type -----> ${type}`, `line one ----> ${line_one}`, `line two ----> ${line_two}`, `chroma or alpha ----> ${chroma_or_alpha}`);
   }
