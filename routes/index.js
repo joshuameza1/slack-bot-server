@@ -3,8 +3,11 @@ require("dotenv").config();
 const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
+var Slack = require('node-slack-upload');
 
 const token = process.env.SLACK_TOKEN;
+
+var slack = new Slack(token);
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
@@ -190,22 +193,23 @@ router.post("/slack/interactions", (req, res) => {
         if (err) return console.log(err);   
       });
     });
-    
-    try {
-      // Call the files.upload method using the WebClient
-      const result = web.files.upload({
-        // channels can be a list of one to many strings
-        channels: id,
-        initial_comment: "Here\'s your " + type + "! :smile:",
-        // Include your filename in a ReadStream here
-        file: fs.createReadStream('render.json')
-      });
 
-      console.log(result);
-    }
-    catch (error) {
-      console.error(error);
-    }
+   
+    slack.uploadFile({
+      file: fs.createReadStream('render.json'),
+      //filetype: 'post',
+      title: 'README',
+      initialComment: 'my comment',
+      channels: id
+    }, function(err, data) {
+      if (err) {
+        console.error(err);
+      }
+      else {
+        console.log('Uploaded file details: ', data);
+      }
+    });
+    
     
     
   }
