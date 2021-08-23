@@ -12,13 +12,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "test"
+            "value": "t"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "s"
+            "value": "null"
         }
     ]
     ,

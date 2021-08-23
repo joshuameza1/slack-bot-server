@@ -1,5 +1,4 @@
 const Slack = require('nodejslack');
-const request = require('request');
 const express = require("express");
 require("dotenv").config();
 const router = express.Router();
@@ -146,7 +145,7 @@ router.post("/slack/interactions", (req, res) => {
   const payload = JSON.parse(req.body.payload);
 
   // view the payload on console
-  console.log(payload);
+  //console.log(payload);
 
   if (
     payload.type === "view_submission" &&
@@ -157,8 +156,8 @@ router.post("/slack/interactions", (req, res) => {
     
     
     const form = {
-      file: fs.createReadStream('test.png'), // Optional, via multipart/form-data. If omitting this parameter, you MUST submit content 
-      // content: 'Your text here', // Optional, File contents. If omitting this parameter, you must provide a `file`  
+      //file: fs.createReadStream(''), // Optional, via multipart/form-data. If omitting this parameter, you MUST submit content 
+      content: 'test', // Optional, File contents. If omitting this parameter, you must provide a `file`  
       filename: 'test.png', // Required  
       fileType: 'auto', // Optional, See more file types in https://api.slack.com/types/file#file_types 
       title: 'Test PNG', // Optional 
@@ -184,7 +183,7 @@ router.post("/slack/interactions", (req, res) => {
     });
     
     
-    const { values } = payload.view.state;
+    /*const { values } = payload.view.state;
     const type = values.type.type.selected_option.value;
     const line_one = values.line_one.line_one.value;
     const line_two = values.line_two.line_two.value;
@@ -211,6 +210,7 @@ router.post("/slack/interactions", (req, res) => {
         if (err) return console.log(err);
       });
     });
+    */
   }
 });
 
