@@ -1,8 +1,14 @@
+const SlackBot = require('slackbots');
 const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
+
+const bot = new SlackBot({
+    token: `${process.env.BOT_TOKEN}`,
+    name: 'inspirenuggets'
+})
 
 const token = process.env.SLACK_TOKEN;
 
