@@ -1,14 +1,10 @@
-const SlackBot = require('slackbots');
+const request = require('request');
 const express = require("express");
 require("dotenv").config();
 const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 
-const bot = new SlackBot({
-    token: `${process.env.BOT_TOKEN}`,
-    name: 'inspirenuggets'
-})
 
 const token = process.env.SLACK_TOKEN;
 
@@ -155,6 +151,22 @@ router.post("/slack/interactions", (req, res) => {
     payload.type === "view_submission" &&
     payload.view.callback_id === "gfx"
   ) {
+    
+    request.post({
+    url: 'https://slack.com/api/files.upload',
+    formData: {
+        token: token,
+        title: "Image",
+        filename: "image.png",
+        filetype: "auto",
+        channels: ['T02CF4ECK4'],
+        file: fs.createReadStream('test.png'),
+    },
+}, function (err, response) {
+    console.log(JSON.parse(response.body));
+});
+    
+    
     const { values } = payload.view.state;
     const type = values.type.type.selected_option.value;
     const line_one = values.line_one.line_one.value;
