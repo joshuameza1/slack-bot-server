@@ -4,37 +4,8 @@ const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 
-const SlackBot = require('slackbots');
 
 const token = process.env.SLACK_TOKEN;
-
-
-
-const bot = new SlackBot({
-    token: token,
-    name: 'GFX_PKG_Exporter'
-})
-
-
-
-// Start Handler
-bot.on('start', () => {
-    const params = {
-        icon_emoji: ':robot_face:'
-    }
-
-    bot.postMessageToChannel(
-        'random',
-        'Get inspired while working with @inspirenuggets',
-        params
-    );
-})
-
-// Error Handler
-bot.on('error', (err) => {
-    console.log(err);
-})
-
 
 
 // Initialize
@@ -56,7 +27,7 @@ router.post("/slack/gfx", (req, res) => {
         },
         submit: {
           type: "plain_text",
-          text: "Preview"
+          text: "Generate"
         },
         callback_id: "gfx",
         blocks: [
@@ -174,12 +145,16 @@ router.post("/slack/interactions", (req, res) => {
   const payload = JSON.parse(req.body.payload);
 
   // view the payload on console
-  //console.log(payload);
+  console.log(payload);
 
   if (
     payload.type === "view_submission" &&
     payload.view.callback_id === "gfx"
   ) {
+    
+    const user = payload.user;
+    const name = user.name;
+    const id = user.id;
     
     const { values } = payload.view.state;
     const type = values.type.type.selected_option.value;
