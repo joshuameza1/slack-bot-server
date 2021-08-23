@@ -12,23 +12,6 @@ const web = new WebClient(token, { retries: 0 });
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
 
-  const fileName = "template_preview.json";
-
-  fs.readFile(fileName, "utf8", function(err, data) {
-    if (err) {
-      return console.log(err);
-    }
-    var newData = data
-    .replace("*LineOne", "abssfc")
-    .replace("*LineTwo", "abssfcsdf");
-
-    console.log(newData);
-
-    fs.writeFile("preview.json", newData, "utf8", function(err) {
-      if (err) return console.log(err);
-    });
-  });
-
   res.status(200).send("");
   (async () => {
     // Open a modal.
@@ -66,7 +49,7 @@ router.post("/slack/gfx", (req, res) => {
                     text: "Nameslide | 10sec",
                     emoji: true
                   },
-                  value: "nameslide"
+                  value: "Nameslide"
                 },
                 {
                   text: {
@@ -74,7 +57,7 @@ router.post("/slack/gfx", (req, res) => {
                     text: "Hosting Slide | 30sec",
                     emoji: true
                   },
-                  value: "hosting_slide"
+                  value: "HostingSlide"
                 }
               ],
               action_id: "type"
@@ -127,7 +110,7 @@ router.post("/slack/gfx", (req, res) => {
                     text: "Alpha",
                     emoji: true
                   },
-                  value: "alpha"
+                  value: "Alpha"
                 },
                 {
                   text: {
@@ -135,7 +118,7 @@ router.post("/slack/gfx", (req, res) => {
                     text: "Chroma",
                     emoji: true
                   },
-                  value: "chroma"
+                  value: "Chroma"
                 }
               ],
               action_id: "chroma_or_alpha"
@@ -170,59 +153,26 @@ router.post("/slack/interactions", (req, res) => {
     const chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
-    var data = {
-      template: {
-        src:
-          "file:///Users/joshua.meza/Dropbox/NexRender/02_ProjectFiles/AfterEffects/GFX5_Overlays.aep",
-        composition: "GFX5_Nameslide_Temp",
+    
+    const fileName = "template_preview.json";
 
-        frameStart: 120,
-        frameEnd: 120,
-        frameIncrement: 1
-      },
-      assets: [
-        {
-          type: "data",
-          layerName: "^Name",
-          property: "Source Text",
-          value: "First & Last Name"
-        },
-        {
-          type: "data",
-          layerName: "^Title",
-          property: "Source Text",
-          value: "Title and Position"
-        }
-      ],
-      actions: {
-        postrender: [
-          {
-            module: "@nexrender/action-encode",
-            output:
-              "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/Nameslide_Preview.png",
-            params: { "-c:v": "png" }
-          }
-        ]
+    fs.readFile(fileName, "utf8", function(err, data) {
+      if (err) {
+        return console.log(err);
       }
-    };
+      var newData = data
+        .replace("*TYPE*", type)
+        .replace("*CHROMAORALPHA*", chroma_or_alpha)
+        .replace("*LINEONE*", line_one)
+        .replace("*LINETWO*", line_two);
+        
 
-    /*fs.writeFile("./input.json", JSON.stringify(data), function(err) {
-      if (err) throw err;
-      console.log("complete");
-    });
-    fs.readFile("./input.json", (err, data) => {
-      if (err) throw err;
-      let student = JSON.parse(data);
-      console.log(student);
-    });
-    */
+      console.log(newData);
 
-    console.log(
-      `type -----> ${type}`,
-      `line one ----> ${line_one}`,
-      `line two ----> ${line_two}`,
-      `chroma or alpha ----> ${chroma_or_alpha}`
-    );
+      fs.writeFile("preview.json", newData, "utf8", function(err) {
+        if (err) return console.log(err);
+      });
+    });
   }
 });
 

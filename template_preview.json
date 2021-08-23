@@ -1,7 +1,7 @@
 {
     "template": {
         "src": "file:///Users/joshua.meza/Dropbox/NexRender/02_ProjectFiles/AfterEffects/GFX5_Overlays.aep",
-        "composition": "GFX5_Nameslide_Temp",
+        "composition": "GFX5_*TYPE*_*CHROMAORALPHA*_Temp",
 
         "frameStart": 120,
         "frameEnd": 120,
@@ -12,13 +12,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "*LineOne"
+            "value": "*LINEONE*"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "*LineTwo"
+            "value": "*LINETWO*"
         }
     ]
     ,
