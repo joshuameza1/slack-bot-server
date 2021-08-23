@@ -20,55 +20,111 @@ router.post('/slack/frontdesk', (req, res) => {
         type: 'modal',
         title: {
           type: 'plain_text',
-          text: 'Contact Front Desk',
+          text: 'GFX PKG Exporter',
         },
         submit: {
           type: 'plain_text',
-          text: 'Submit',
+          text: 'Preview',
         },
         callback_id: 'frontdesk',
         blocks: [
-          {
-            type: 'section',
-            text: {
-              type: 'plain_text',
-              text: ':wave: We will get back to you as soon as possible',
-              emoji: true,
-            },
+                {
+            "type": "divider"
           },
           {
-            type: 'divider',
+            "type": "input",
+            "element": {
+              "type": "static_select",
+              "placeholder": {
+                "type": "plain_text",
+                "text": "Select an option",
+                "emoji": true
+              },
+              "options": [
+                {
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Nameslide | 10sec",
+                    "emoji": true
+                  },
+                  "value": "value-0"
+                },
+                {
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Hosting Slide | 30sec",
+                    "emoji": true
+                  },
+                  "value": "value-1"
+                }
+              ],
+              "action_id": "static_select-action"
+            },
+            "label": {
+              "type": "plain_text",
+              "text": "What asset would you like to export?",
+              "emoji": true
+            }
           },
-
           {
-            type: 'input',
-            block_id: 'title',
-            label: {
-              type: 'plain_text',
-              text: 'Title',
-              emoji: true,
+            "type": "input",
+            "block_id": "title",
+            "element": {
+              "type": "plain_text_input",
+              "action_id": "plain_text_input-action"
             },
-            element: {
-              type: 'plain_text_input',
-              multiline: false,
-              action_id: 'title',
-            },
+            "label": {
+              "type": "plain_text",
+              "text": "Line One",
+              "emoji": true
+            }
           },
           {
-            type: 'input',
-            block_id: 'description',
-            label: {
-              type: 'plain_text',
-              text: 'Description',
-              emoji: true,
+            "type": "input",
+            "block_id": "description",
+            "element": {
+              "type": "plain_text_input",
+              "action_id": "plain_text_input-action"
             },
-            element: {
-              type: 'plain_text_input',
-              multiline: true,
-              action_id: 'description',
+            "label": {
+              "type": "plain_text",
+              "text": "Line Two",
+              "emoji": true
             },
-            optional: true,
+            "optional": true
           },
+          {
+            "type": "divider"
+          },
+          {
+            "type": "input",
+            "element": {
+              "type": "radio_buttons",
+              "options": [
+                {
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Alpha",
+                    "emoji": true
+                  },
+                  "value": "value-0"
+                },
+                {
+                  "text": {
+                    "type": "plain_text",
+                    "text": "Chroma",
+                    "emoji": true
+                  },
+                  "value": "value-1"
+                }
+              ],
+              "action_id": "radio_buttons-action"
+            },
+            "label": {
+              "type": "plain_text",
+              "text": " "
+            }
+          }
         ],
       },
     });
