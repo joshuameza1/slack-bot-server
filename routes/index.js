@@ -196,8 +196,8 @@ router.post("/slack/interactions", (req, res) => {
 
    
     slack.uploadFile({
-      file: fs.createReadStream('render.json'),
-      //filetype: 'post',
+      content: 'My file contents!',
+      filetype: 'post',
       title: 'README',
       initialComment: 'my comment',
       channels: id
