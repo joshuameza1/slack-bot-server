@@ -12,20 +12,16 @@ const web = new WebClient(token, { retries: 0 });
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
   
-  const fileName = './preview.json';
-    
-    fs.readFile(fileName, (err, data) => {
-      if (err) throw err;
-      let student = JSON.parse(data);
-      console.log(student);
-    });
+  const fileName = '../preview.json';
+  //const file = require(fileName);
   
-    /*fs.writeFile('.route/input.json', JSON.stringify(file), function writeJSON(err) {
-      if (err) return console.log(err);
-      console.log(JSON.stringify(file, null, 2));
-      console.log('writing to ' + fileName);
-    });
-    */
+  let rawdata = fs.readFileSync(fileName);
+  let data = JSON.parse(rawdata);
+  
+  console.log(data);
+  
+  
+  
 
   res.status(200).send("");
   (async () => {
