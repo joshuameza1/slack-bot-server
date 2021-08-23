@@ -27,7 +27,7 @@ router.post("/slack/gfx", (req, res) => {
         },
         submit: {
           type: "plain_text",
-          text: "Generate"
+          text: "Export"
         },
         callback_id: "gfx",
         blocks: [
@@ -164,7 +164,7 @@ router.post("/slack/interactions", (req, res) => {
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
     
-    const fileName = "template_preview.json";
+    const fileName = "template_render.json";
 
     fs.readFile(fileName, "utf8", function(err, data) {
       if (err) {
@@ -179,7 +179,7 @@ router.post("/slack/interactions", (req, res) => {
 
       //console.log(newData);
 
-      fs.writeFile("preview.json", newData, "utf8", function(err) {
+      fs.writeFile("render.json", newData, "utf8", function(err) {
         if (err) return console.log(err);
       });
     });
