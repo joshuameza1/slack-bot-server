@@ -4,8 +4,24 @@ const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 
+const { App } = require('@slack/bolt')
 
 const token = process.env.SLACK_TOKEN;
+const signingsecret = process.env.SLACK_SIGNING_SECRET;
+
+const app = new App({
+  token: token,
+  signingSecret: signingsecret
+});
+
+(async () => {
+  const result = await app.client.chat.postMessage({
+    token: token,
+    channel: 'U02BJNW2U9L',
+    text: 'hello world'
+  });
+  console.log(result)
+})();
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
