@@ -48,7 +48,7 @@ router.post('/slack/gfx', (req, res) => {
                     "text": "Nameslide | 10sec",
                     "emoji": true
                   },
-                  "value": "value-0"
+                  "value": "nameslide"
                 },
                 {
                   "text": {
@@ -56,7 +56,7 @@ router.post('/slack/gfx', (req, res) => {
                     "text": "Hosting Slide | 30sec",
                     "emoji": true
                   },
-                  "value": "value-1"
+                  "value": "hosting_slide"
                 }
               ],
               "action_id": "type"
@@ -69,10 +69,10 @@ router.post('/slack/gfx', (req, res) => {
           },
           {
             "type": "input",
-            "block_id": "line-one",
+            "block_id": "line_one",
             "element": {
               "type": "plain_text_input",
-              "action_id": "line-one"
+              "action_id": "line_one"
             },
             "label": {
               "type": "plain_text",
@@ -82,10 +82,10 @@ router.post('/slack/gfx', (req, res) => {
           },
           {
             "type": "input",
-            "block_id": "line-two",
+            "block_id": "line_two",
             "element": {
               "type": "plain_text_input",
-              "action_id": "line-two"
+              "action_id": "line_two"
             },
             "label": {
               "type": "plain_text",
@@ -99,7 +99,7 @@ router.post('/slack/gfx', (req, res) => {
           },
           {
             "type": "input",
-            "block_id": "chroma-or-alpha",
+            "block_id": "chroma_or_alpha",
             "element": {
               "type": "radio_buttons",
               "options": [
@@ -109,7 +109,7 @@ router.post('/slack/gfx', (req, res) => {
                     "text": "Alpha",
                     "emoji": true
                   },
-                  "value": "value-0"
+                  "value": "alpha"
                 },
                 {
                   "text": {
@@ -117,10 +117,10 @@ router.post('/slack/gfx', (req, res) => {
                     "text": "Chroma",
                     "emoji": true
                   },
-                  "value": "value-1"
+                  "value": "chroma"
                 }
               ],
-              "action_id": "chroma-or-alpha"
+              "action_id": "chroma_or_alpha"
             },
             "label": {
               "type": "plain_text",
@@ -147,10 +147,10 @@ router.post('/slack/interactions', (req, res) => {
     payload.view.callback_id === 'gfx'
   ) {
     const { values } = payload.view.state;
-    const type = values.type.type.value;
+    const type = values.type.type.selected_option.value;
     const line_one = values.line_one.line_one.value;
     const line_two = values.line_two.line_two.value;
-    const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.value;
+    const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
     
 
     console.log(`type -----> ${type}`, `line one ----> ${line_one}`, `line two ----> ${line_two}`, `chroma or alpha ----> ${chroma_or_alpha}`);
