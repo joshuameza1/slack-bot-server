@@ -8,7 +8,7 @@ const token = process.env.SLACK_TOKEN;
 // Initialize
 const web = new WebClient(token, { retries: 0 });
 
-router.post('/slack/frontdesk', (req, res) => {
+router.post('/slack/gfx', (req, res) => {
   const { trigger_id: triggerId } = req.body;
 
   res.status(200).send('');
@@ -26,13 +26,14 @@ router.post('/slack/frontdesk', (req, res) => {
           type: 'plain_text',
           text: 'Preview',
         },
-        callback_id: 'frontdesk',
+        callback_id: 'gfx',
         blocks: [
                 {
             "type": "divider"
           },
           {
             "type": "input",
+            "block_id": "type",
             "element": {
               "type": "static_select",
               "placeholder": {
@@ -58,7 +59,7 @@ router.post('/slack/frontdesk', (req, res) => {
                   "value": "value-1"
                 }
               ],
-              "action_id": "static_select-action"
+              "action_id": "type"
             },
             "label": {
               "type": "plain_text",
@@ -68,10 +69,10 @@ router.post('/slack/frontdesk', (req, res) => {
           },
           {
             "type": "input",
-            "block_id": "title",
+            "block_id": "line-one",
             "element": {
               "type": "plain_text_input",
-              "action_id": "plain_text_input-action"
+              "action_id": "line-one"
             },
             "label": {
               "type": "plain_text",
@@ -81,10 +82,10 @@ router.post('/slack/frontdesk', (req, res) => {
           },
           {
             "type": "input",
-            "block_id": "description",
+            "block_id": "line-two",
             "element": {
               "type": "plain_text_input",
-              "action_id": "plain_text_input-action"
+              "action_id": "line-two"
             },
             "label": {
               "type": "plain_text",
@@ -98,6 +99,7 @@ router.post('/slack/frontdesk', (req, res) => {
           },
           {
             "type": "input",
+            "block_id": "chroma-or-alpha",
             "element": {
               "type": "radio_buttons",
               "options": [
@@ -118,7 +120,7 @@ router.post('/slack/frontdesk', (req, res) => {
                   "value": "value-1"
                 }
               ],
-              "action_id": "radio_buttons-action"
+              "action_id": "chroma-or-alpha"
             },
             "label": {
               "type": "plain_text",
@@ -142,13 +144,16 @@ router.post('/slack/interactions', (req, res) => {
 
   if (
     payload.type === 'view_submission' &&
-    payload.view.callback_id === 'frontdesk'
+    payload.view.callback_id === 'gfx'
   ) {
     const { values } = payload.view.state;
-    const title = values.title.title.value;
-    const description = values.description.description.value;
+    const type = values.type.type.value;
+    const line_one = values.line_one.line_one.value;
+    const line_two = values.line_two.line_two.value;
+    const chroma_or_alpha = values.chroma_or_alpha.chroma_or_alpha.value;
+    
 
-    console.log(`title ----->${title}`, `description---->${description}`);
+    console.log(`type -----> ${type}`, `line one ----> ${line_one}`, `line two ----> ${line_two}`, `chroma or alpha ----> ${chroma_or_alpha}`);
   }
 });
 
