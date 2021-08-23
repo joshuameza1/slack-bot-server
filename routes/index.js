@@ -18,7 +18,9 @@ router.post("/slack/gfx", (req, res) => {
     if (err) {
       return console.log(err);
     }
-    var newData = data.replace("*LineOne", "abssfc");
+    var newData = data
+    .replace("*LineOne", "abssfc")
+    .replace("*LineTwo", "abssfcsdf");
 
     console.log(newData);
 
