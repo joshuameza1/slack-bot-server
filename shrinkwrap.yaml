@@ -4,6 +4,7 @@ dependencies:
   body-parser: 1.19.0
   dotenv: 8.6.0
   express: 4.17.1
+  node-slack-upload: 2.0.0
   nodejslack: 1.4.0
   request: 2.88.2
   slackbots: 1.2.0
@@ -1512,6 +1513,14 @@ packages:
       node: '>= 0.6'
     resolution:
       integrity: sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
+  /node-slack-upload/2.0.0:
+    dependencies:
+      lodash: 4.17.21
+      request: 2.88.2
+      underscore.string: 3.3.5
+    dev: false
+    resolution:
+      integrity: sha512-R70IyezM8E5UBKz4dS51tKqhaGJVWnYjqm4FyCgXSCVTvKAunbkQIJhLNbyi5RmvSTDL2EYUoJurexgRx9KMqA==
   /nodejslack/1.4.0:
     dependencies:
       bluebird: 3.7.2
@@ -1968,6 +1977,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-fld5BJ16QXavgalKbIAOIkycSObQyGXTWvjGSD/jJxI7c8lDf5aVFWWqNI2f/eAvEVU5KgaTwqmo80pHEcPZUA==
+  /sprintf-js/1.1.2:
+    dev: false
+    resolution:
+      integrity: sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
   /sshpk/1.16.1:
     dependencies:
       asn1: 0.2.4
@@ -2167,6 +2180,13 @@ packages:
     dev: true
     resolution:
       integrity: sha512-nrXZwwXrD/T/JXeygJqdCO6NZZ1L66HrxM/Z7mIq2oPanoN0F1nLx3lwJMu6AwJY69hdixaFQOuoYsMjE5/C2A==
+  /underscore.string/3.3.5:
+    dependencies:
+      sprintf-js: 1.1.2
+      util-deprecate: 1.0.2
+    dev: false
+    resolution:
+      integrity: sha512-g+dpmgn+XBneLmXXo+sGlW5xQEt4ErkS3mgeN2GFbremYeMBSJKr9Wf2KJplQVaiPY/f7FN6atosWYNm9ovrYg==
   /unique-string/2.0.0:
     dependencies:
       crypto-random-string: 2.0.0
@@ -2215,6 +2235,10 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-FrXK/Afb42dsGxmZF3gj1lA6yww=
+  /util-deprecate/1.0.2:
+    dev: false
+    resolution:
+      integrity: sha1-RQ1Nyfpw3nMnYvvS1KKJgUGaDM8=
   /utils-merge/1.0.1:
     dev: false
     engines:
@@ -2317,6 +2341,7 @@ specifiers:
   body-parser: ^1.19.0
   dotenv: ^8.2.0
   express: ^4.17.1
+  node-slack-upload: ^2.0.0
   nodejslack: ^1.4.0
   nodemon: ^2.0.2
   request: ^2.88.2
