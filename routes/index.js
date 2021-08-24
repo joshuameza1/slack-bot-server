@@ -167,7 +167,7 @@ router.post("/slack/interactions", (req, res) => {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
         channel: id,
-        text: "Hey " + name + "! Your " + type + " for " + line_one + " is being rendered and will be uploaded here shortly!"
+        text: "Hey " + name + "! Your " + chroma_or_alpha + " " + type + " for \"" + line_one + "\" is being rendered and will be uploaded here shortly!"
       });
 
       console.log(result);
