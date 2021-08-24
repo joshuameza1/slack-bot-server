@@ -22,7 +22,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/Nameslide.mov",
+                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_*TYPE*_*LINEONE*_*ALPHAORCHROMA*.mov",
                 "params": {"-c:v":"prores_ks", "-profile:v":"4"}
             }
         ]
