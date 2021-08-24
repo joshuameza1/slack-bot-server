@@ -8,13 +8,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "Joshua meza"
+            "value": "Simon Norman"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "test line"
+            "value": "TEST"
         }
     ]
     ,
@@ -22,7 +22,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_JoshuaMeza_Chroma.mov",
+                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_SimonNorman_Chroma.mov",
                 "params": {"-c:v":"prores_ks", "-profile:v":"4"}
             }
         ]
