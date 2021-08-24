@@ -163,6 +163,15 @@ router.post("/slack/interactions", (req, res) => {
     let chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
+    function titleCase(str) {
+      return str.toLowerCase().split(' ').map(function(word) {
+        return (word.charAt(0).toUpperCase() + word.slice(1));
+      }).join(' ');
+    };
+    
+    let filename = type + "_" + titleCase(line_one) + "_" + chroma_or_alpha;
+   
+    
     try {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
@@ -185,7 +194,8 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", line_one)
-        .replace("*LINETWO*", line_two);
+        .replace("*LINETWO*", line_two)
+        .replace("*FILENAME*", filename.replace(/\s/g, ''));
 
       //console.log(newData);
 
