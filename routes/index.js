@@ -5,6 +5,13 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 const request = require('request');
 
+const server = require('@nexrender/server')
+
+const port = 3000
+const secret = 'myapisecret'
+
+server.listen(port, secret);
+
 
 const token = process.env.SLACK_TOKEN;
 
