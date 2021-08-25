@@ -5,27 +5,24 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 const request = require("request");
 
-
-
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const port = 8000;
 
-server.listen(port, function() {
+/*server.listen(port, function() {
   console.log("Server listening at port %d", port);
 });
 
-var client = [];
 
-io.on("connection", socket => {
+
+/*io.on("connection", socket => {
   console.log("New Client is Connected!");
   //console.log(socket);
-  client.push(socket);
-});
+  client = socket;
+});*/
 
-if
-  client[0].emit("hello", "world");
+
 
 const token = process.env.SLACK_TOKEN;
 
