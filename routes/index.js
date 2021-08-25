@@ -5,22 +5,6 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 const request = require('request');
 
-const server = require('@nexrender/server')
-
-const port = 5000
-const secret = 'myapisecret'
-
-server.listen(port, secret);
-
-
-
-const { createClient } = require('@nexrender/api')
-
-const client = createClient({
-    host: 'http://my.server.com:3050',
-    secret: 'myapisecret',
-})
-
 
 
 const token = process.env.SLACK_TOKEN;
@@ -219,18 +203,6 @@ router.post("/slack/interactions", (req, res) => {
       fs.writeFile("render.json", newData, "utf8", function(err) {
         if (err) return console.log(err);   
       });
-      
-      const main = async () => {
-          const result = await client.addJob(newData);
-
-          result.on('created', job => console.log('project has been created'))
-          result.on('started', job => console.log('project rendering started'))
-          result.on('progress', (job, percents) => console.log('project is at: ' + percents + '%'))
-          result.on('finished', job => console.log('project rendering finished'))
-          result.on('error', err => console.log('project rendering error', err))
-      }
-
-      main().catch(console.error);
       
     });
     
