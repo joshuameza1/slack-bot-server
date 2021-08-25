@@ -10,7 +10,14 @@ var server = require("http").createServer(app);
 var io = require("socket.io")(server);
 var port = 8000;
 
+server.listen(port, function() {
+      console.log("Server listening at port %d", port);
+    });
 
+io.on("connection", socket => {
+      console.log("New Client is Connected!");
+  
+    });
 
 const token = process.env.SLACK_TOKEN;
 
@@ -20,6 +27,8 @@ const web = new WebClient(token, { retries: 0 });
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
 
+  
+  
   res.status(200).send("");
   (async () => {
     // Open a modal.
@@ -221,17 +230,8 @@ router.post("/slack/interactions", (req, res) => {
       });
     });
 
-    server.listen(port, function() {
-      console.log("Server listening at port %d", port);
-    });
-
-    io.on("connection", socket => {
-      //Socket is a Link to the Client
-      console.log("New Client is Connected!");
-      //Here the client is connected and we can exchanged
-      socket.emit("hello", "world");
-    });
-      }
-    });
+    
+  }
+});
 
 module.exports = router;
