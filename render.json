@@ -1,20 +1,20 @@
 {
     "template": {
         "src": "file:///Users/joshua.meza/Dropbox/NexRender/02_ProjectFiles/AfterEffects/GFX5_Overlays.aep",
-        "composition": "GFX5_Nameslide_Chroma_Temp"
+        "composition": "GFX5_Nameslide_Alpha_Temp"
     },
     "assets": [
         {
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "Simon Norman"
+            "value": "test"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "TEST"
+            "value": ""
         }
     ]
     ,
@@ -22,7 +22,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_SimonNorman_Chroma.mov",
+                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_Test_Alpha.mov",
                 "params": {"-c:v":"prores_ks", "-profile:v":"4"}
             }
         ]

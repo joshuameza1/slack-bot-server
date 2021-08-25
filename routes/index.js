@@ -3,12 +3,16 @@ require("dotenv").config();
 const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
-const request = require('request');
+const request = require("request");
+
+var app = express();
+var server = require("http").createServer(app);
+var io = require("socket.io")(server);
+var port = 8000;
 
 
 
 const token = process.env.SLACK_TOKEN;
-
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
@@ -165,19 +169,31 @@ router.post("/slack/interactions", (req, res) => {
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
 
     function titleCase(str) {
-      return str.toLowerCase().split(' ').map(function(word) {
-        return (word.charAt(0).toUpperCase() + word.slice(1));
-      }).join(' ');
-    };
-    
+      return str
+        .toLowerCase()
+        .split(" ")
+        .map(function(word) {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+    }
+
     let filename = type + "_" + titleCase(line_one) + "_" + chroma_or_alpha;
-   
-    
+
     try {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
         channel: id,
-        text: "Hey " + name + "! Your " + chroma_or_alpha + " " + type + " for \"" + line_one + "\" is being rendered and will be uploaded here shortly!"
+        text:
+          "Hey " +
+          name +
+          "! Your " +
+          chroma_or_alpha +
+          " " +
+          type +
+          ' for "' +
+          line_one +
+          '" is being rendered and will be uploaded here shortly!'
       });
 
       console.log(result);
@@ -196,43 +212,26 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", line_one)
         .replace("*LINETWO*", line_two)
-        .replace("*FILENAME*", filename.replace(/\s/g, ''));
+        .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
       //console.log(newData);
 
       fs.writeFile("render.json", newData, "utf8", function(err) {
-        if (err) return console.log(err);   
+        if (err) return console.log(err);
       });
-      
     });
-    
-    
-    
-    
-    
-    
-    
 
-  /* 
-  const options = { method: 'POST',
-      url: 'https://slack.com/api/files.upload',
-      headers: 
-       { 'cache-control': 'no-cache' },
-      formData: 
-       { token: token,
-         channels: id,
-         file: fs.createReadStream("README.md")
-        } };
-
-    request(options, function (error, response, body) {
-      if (error) throw new Error(error);
-
-      console.log(body);
+    server.listen(port, function() {
+      console.log("Server listening at port %d", port);
     });
-    */
-    
-    
-  }
-});
+
+    io.on("connection", socket => {
+      //Socket is a Link to the Client
+      console.log("New Client is Connected!");
+      //Here the client is connected and we can exchanged
+      socket.emit("hello", "world");
+    });
+      }
+    });
 
 module.exports = router;
