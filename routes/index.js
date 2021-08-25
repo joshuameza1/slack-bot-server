@@ -5,19 +5,7 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 const request = require("request");
 
-var app = express();
-var server = require("http").createServer(app);
-var io = require("socket.io")(server);
-var port = 8000;
 
-server.listen(port, function() {
-      console.log("Server listening at port %d", port);
-    });
-
-io.on("connection", socket => {
-      console.log("New Client is Connected!");
-  
-    });
 
 const token = process.env.SLACK_TOKEN;
 
@@ -26,8 +14,6 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
-
-  
   
   res.status(200).send("");
   (async () => {
@@ -229,8 +215,6 @@ router.post("/slack/interactions", (req, res) => {
         if (err) return console.log(err);
       });
     });
-
-    
   }
 });
 
