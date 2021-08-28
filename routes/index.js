@@ -6,7 +6,7 @@ const fs = require("fs");
 const request = require("request");
 
 
-
+/*
 const app = express();
 const server2 = require("http").createServer(app);
 const io = require("socket.io")(server2);
@@ -25,6 +25,7 @@ io.on("connection", socket => {
 });
 
 //client.emit("hello", "world");
+*/
 
 const token = process.env.SLACK_TOKEN;
 
