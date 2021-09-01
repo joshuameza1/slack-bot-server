@@ -197,7 +197,7 @@ router.post("/slack/interactions", (req, res) => {
       console.error(error);
     }
 
-    const fileName = "template_render.json";
+    const fileName = "./src/template_render.json";
 
     fs.readFile(fileName, "utf8", function(err, data) {
       if (err) {
@@ -212,7 +212,7 @@ router.post("/slack/interactions", (req, res) => {
 
       //console.log(newData);
 
-      fs.writeFile("render.json", newData, "utf8", function(err) {
+      fs.writeFile("./src/render.json", newData, "utf8", function(err) {
         if (err) return console.log(err);
       });
     });

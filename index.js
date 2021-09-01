@@ -1,12 +1,9 @@
 'use strict';
 
 const app = require('./server/app.js');
-const app2 = require('./server/app2.js')
-const config = require('./server/configDomain');
-const config2 = require('./server/configDomain2');
+const app2 = require('./server/app2.js');
 
+                     
+app.listen(3000, () => console.log(`app listening at http://localhost:3000`));
 
-app.app.listen(config.port, () => console.log(`app listening at http://localhost:3000`));
-
-
-app2.httpServer.listen(config2.port, () => console.log(`Server listening at port 8000`));
+app2.listen(8000, () => console.log(`Server listening at port 8000`));
