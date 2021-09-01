@@ -13,4 +13,20 @@ app.get('/', (req, res) => {
 
 app.use('/api', routes);
 
+
+
+
+const httpServer = require("http").createServer(app);
+
+const options = { /* ... */ };
+const io = require("socket.io")(httpServer, options);
+
+io.on("connection", socket => {
+  console.log("New Client is Connected!");
+  //console.log(socket);
+  //client = socket;
+});
+
+
+
 module.exports = app;
