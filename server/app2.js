@@ -1,9 +1,14 @@
 const express = require('express');
-const routes = require('../routes/routes2.js');
-
 const app = express();
+const httpServer = require("http").createServer(app);
+const options = { /* ... */ };
+const io = require("socket.io")(httpServer, options);
 
-app.use('/',routes)
+io.on("connection", socket => {
+  console.log("New Client is Connected!");
+  //console.log(socket);
+  //client = socket;
+});
 
-module.exports = app;
+module.exports = httpServer;
 
