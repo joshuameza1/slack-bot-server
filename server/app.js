@@ -23,13 +23,16 @@ const httpServer = require("http").createServer(app);
 const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
 
+
 io.on("connection", socket => {
   console.log("New Client is Connected!");
   // console.log(socket);
-  //client = socket;
+  //socket.emit("hello", "world");
 });
 
-//
+io.sockets.emit("hello", "world");
+
+//Export Modules
 
 module.exports = app;
 module.exports = httpServer;

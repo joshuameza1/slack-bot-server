@@ -210,7 +210,6 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINETWO*", line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
-      //console.log(newData);
 
       fs.writeFile("./src/render.json", newData, "utf8", function(err) {
         if (err) return console.log(err);
