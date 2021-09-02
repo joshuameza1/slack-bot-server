@@ -14,8 +14,6 @@ app.get('/', (req, res) => {
 app.use('/api', routes);
 
 
-
-
 const httpServer = require("http").createServer(app);
 
 const options = { /* ... */ };
