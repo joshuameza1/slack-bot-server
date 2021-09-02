@@ -19,20 +19,24 @@ app.use('/api', routes);
 //Socket IO Server
 
 const httpServer = require("http").createServer(app);
-
 const options = { /* ... */ };
-const io = require("socket.io")(httpServer, options);
-const getClient = function(server) {
-    var io = require('socket.io').listen(server);
-    io.sockets.on('connection', function (socket) {
-        //How to expose the socket here to other JS methods using socket. Emit?
-        socket.emit("hello", "world");
+
+const socket = function(server) {
+    const io = require("socket.io")(httpServer, options);
+  
+    io.on("connection", socket => {
+      console.log("New Client is Connected!");
+      // console.log(socket);
+      //socket.emit("hello", "world");
     });
     return io;
+
 };
+
 
 //Export Modules
 
-module.exports = app;
-module.exports = httpServer;
-
+module.exports = {
+  httpServer,
+  socket
+}
