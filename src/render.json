@@ -8,13 +8,13 @@
             "type": "data",
             "layerName": "^Name",
             "property": "Source Text",
-            "value": "asdf"
+            "value": "Simon Norman"
         },
         {
             "type": "data",
             "layerName": "^Title",
             "property": "Source Text",
-            "value": "asdf"
+            "value": "A BOSS!"
         }
     ]
     ,
@@ -22,7 +22,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_Asdf_Alpha.mov",
+                "output": "/Users/joshua.meza/Dropbox/NexRender/03_Encodes/GFX5_Nameslide_SimonNorman_Alpha.mov",
                 "params": {"-c:v":"prores_ks", "-profile:v":"4"}
             }
         ]
