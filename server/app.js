@@ -35,8 +35,7 @@ io.on("connection", socket => {
 //Export Modules
 
 module.exports = {
-  
-  httpServer
-  //io,
-  //client
+  httpServer,
+  io,
+  client
 }
