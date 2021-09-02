@@ -20,23 +20,23 @@ app.use('/api', routes);
 
 const httpServer = require("http").createServer(app);
 const options = { /* ... */ };
+const io = require("socket.io")(httpServer, options);
 
-const socket = function(server) {
-    const io = require("socket.io")(httpServer, options);
-  
-    io.on("connection", socket => {
-      console.log("New Client is Connected!");
-      // console.log(socket);
-      //socket.emit("hello", "world");
-    });
-    return io;
 
-};
+var client;
+io.on("connection", socket => {
+  console.log("New Client is Connected!");
+  client = socket.id;
+  // console.log(socket);
+  //socket.emit("hello", "world");
+});
 
 
 //Export Modules
 
 module.exports = {
-  httpServer,
-  socket
+  
+  httpServer
+  //io,
+  //client
 }

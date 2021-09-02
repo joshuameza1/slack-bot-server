@@ -7,6 +7,8 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 const request = require("request");
 const app = require('../server/app.js');
+const io = app.io;
+var client = app.client;
 
 
 const token = process.env.SLACK_TOKEN;
@@ -16,8 +18,7 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   const { trigger_id: triggerId } = req.body;
-  
-  app.socket.emit("hello", "world");
+  io.client.emit("hello", "world");
   res.status(200).send("");
   (async () => {
     // Open a modal.
