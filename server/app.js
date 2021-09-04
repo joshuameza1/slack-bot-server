@@ -23,12 +23,11 @@ const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
 
 
-var client;
+
 io.on("connection", socket => {
   console.log("New Client is Connected!");
-  client = socket.id;
   // console.log(socket);
-  //socket.emit("hello", "world");
+  socket.emit("hello", "world");
 });
 
 
@@ -36,6 +35,5 @@ io.on("connection", socket => {
 
 module.exports = {
   httpServer,
-  io,
-  client
+  io
 }

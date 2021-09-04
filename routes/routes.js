@@ -8,7 +8,6 @@ const fs = require("fs");
 const request = require("request");
 const app = require('../server/app.js');
 const io = app.io;
-var client = app.client;
 
 
 const token = process.env.SLACK_TOKEN;
