@@ -15,10 +15,6 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   
-  socket.emit("hello", (arg) => {
-     console.log("test"); // world
-   });
-  
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
@@ -215,6 +211,7 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINETWO*", line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
+      socket.broadcast.emit('message', "this is a test");
 
       fs.writeFile("./src/render.json", newData, "utf8", function(err) {
         if (err) return console.log(err);
