@@ -211,11 +211,9 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINETWO*", line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
-      socket.broadcast.emit('message', "this is a test");
+      socket.emit('request', newData);
 
-      fs.writeFile("./src/render.json", newData, "utf8", function(err) {
-        if (err) return console.log(err);
-      });
+      
     });
   }
 });
