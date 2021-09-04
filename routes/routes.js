@@ -210,10 +210,12 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
       socket.emit("request", newData);
+      console.log("Sent JSON Data over to Server");
       
     });
 
     socket.on("done2", arg => {
+      console.log("Render Confirmation Receieved from Server");
       //console.log(data); // world
       try {
         // Call the chat.postMessage method using the WebClient
