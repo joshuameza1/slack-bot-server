@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('../routes/routes.js');
+var handleRequest = require('../handlers/request.js');
 
 //Slack Communication Server
 
@@ -24,10 +25,11 @@ const io = require("socket.io")(httpServer, options);
 
 
 
-io.on("connection", socket => {
+io.on("connection", client => {
   console.log("New Client is Connected!");
+  handleRequest(client);
   // console.log(socket);
-  socket.emit("hello", "world");
+  //socket.emit("hello", "world");
 });
 
 
