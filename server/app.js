@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const routes = require('../routes/routes.js');
-var handleRequest = require('../handlers/request.js');
 
 //Slack Communication Server
 
@@ -24,10 +23,11 @@ const options = { /* ... */ };
 const io = require("socket.io")(httpServer, options);
 
 
+var socketId = "";
 
-io.on("connection", client => {
+io.on("connection", socket => {
   console.log("New Client is Connected!");
-  handleRequest(client);
+  socketId = socket.id;
   // console.log(socket);
   //socket.emit("hello", "world");
 });
@@ -36,6 +36,5 @@ io.on("connection", client => {
 //Export Modules
 
 module.exports = {
-  httpServer,
-  io
+  httpServer
 }
