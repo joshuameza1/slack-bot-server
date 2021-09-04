@@ -5,9 +5,7 @@ require("dotenv").config();
 const router = express.Router();
 const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
-const request = require("request");
-const app = require('../server/app.js');
-const io = app.io;
+var socket = require("../handlers/request.js");
 
 
 const token = process.env.SLACK_TOKEN;
@@ -16,6 +14,11 @@ const token = process.env.SLACK_TOKEN;
 const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
+  
+  socket.emit("hello", (arg) => {
+     console.log("test"); // world
+   });
+  
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
