@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 const express = require("express");
 require("dotenv").config();
@@ -7,14 +7,12 @@ const { WebClient } = require("@slack/web-api");
 const fs = require("fs");
 var socket = require("../handlers/request.js");
 
-
 const token = process.env.SLACK_TOKEN;
 
 // Initialize
 const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
-  
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
@@ -211,9 +209,20 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINETWO*", line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
 
-      socket.emit('request', newData);
+      socket.emit("request", newData);
+    });
 
-      
+    socket.on("done2", data => {
+      //console.log(data); // world
+      try {
+        // Call the chat.postMessage method using the WebClient
+        const result = web.chat.postMessage({
+          channel: id,
+          text: data
+        });
+      } catch (error) {
+        console.error(error);
+      }
     });
   }
 });
