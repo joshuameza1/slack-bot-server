@@ -191,7 +191,7 @@ router.post("/slack/interactions", (req, res) => {
           '" is being rendered and will be uploaded here shortly!'
       });
 
-      console.log(result);
+      //console.log(result);
     } catch (error) {
       console.error(error);
     }
