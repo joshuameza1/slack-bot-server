@@ -156,6 +156,20 @@ router.post("/slack/interactions", (req, res) => {
     payload.type === "view_submission" &&
     payload.view.callback_id === "gfx"
   ) {
+
+router.post("/slack/interactions", (req, res) => {
+  res.status(200).send();
+
+  let payload = JSON.parse(req.body.payload);
+
+  // view the payload on console
+  //console.log(payload);
+  console.log("Request Form submitted from Slack.");
+
+  if (
+    payload.type === "view_submission" &&
+    payload.view.callback_id === "gfx"
+  ) {
     let user = payload.user;
     let name = user.name;
     let id = user.id;
@@ -258,7 +272,13 @@ router.post("/slack/interactions", (req, res) => {
                     "text": "Yes",
                     "style": "primary",
                     "type": "button",
-                    "value": "yes"
+                    "value": "yes",
+                    "confirm": {
+                          "title": "Are you sure?",
+                          "text": "Wouldn't you prefer a good game of chess?",
+                          "ok_text": "Yes",
+                          "dismiss_text": "No"
+                      }
                 },
               {
                     "name": "option",
