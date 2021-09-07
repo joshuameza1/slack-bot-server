@@ -163,6 +163,19 @@ router.post("/slack/interactions", (req, res) => {
     let { values } = payload.view.state;
     let type = values.type.type.selected_option.value;
     let line_one = values.line_one.line_one.value;
+    
+    function findLineBreaks(str){
+    var indices = [];
+    for(var i=0; i<str.length;i++) {
+        if (str[i] === "/r") indices.push(i);
+    }
+    return indices;
+    }
+    
+    
+    
+    console.log(findLineBreaks(line_one));
+    
     let line_two = values.line_two.line_two.value;
     if (line_two == null) {
       line_two = "";
