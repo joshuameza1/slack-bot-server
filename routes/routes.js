@@ -143,24 +143,28 @@ router.post("/slack/gfx", (req, res) => {
   console.log("Request Form sent to Slack.");
 });
 
-router.post("/slack", (req, res) => {
-  res.status(200).send();
-
-  let payload = JSON.parse(req.body.payload);
-  console.log(payload);
-  
-})
 
 
 router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
 
   let payload = JSON.parse(req.body.payload);
-  //console.log(payload);
-
+  console.log(payload);
+  if (
+      payload.type === "interactive_message" &&
+      payload.callback_id === "preview_confirmation"
+    ) {
+      let user = payload.user;
+      let name = user.name;
+      let id = user.id;
+      let { values } = payload.view.state;
+      let type = values.type.type.selected_option.value;
+      console.log(values);
+  }
+  
+  
   
   // view the payload on console
-  //console.log(payload);
   console.log("Request Form submitted from Slack.");
 
   if (
@@ -256,12 +260,12 @@ router.post("/slack/interactions", (req, res) => {
         const result = web.chat.postMessage({
           channel: id,
           "text": "Does this preview look correct?",
-          "callback_id": "preview_confirmation",
           "attachments": [
         {
             "color": "#36a64f",
             "title": arg[0],
             "title_link": arg[1],
+            "callback_id": "preview_confirmation",
             "attachment_type": "default",
             "actions": [
                 {
@@ -269,13 +273,7 @@ router.post("/slack/interactions", (req, res) => {
                     "text": "Yes",
                     "style": "primary",
                     "type": "button",
-                    "value": "yes",
-                    "confirm": {
-                          "title": "Are you sure?",
-                          "text": "Wouldn't you prefer a good game of chess?",
-                          "ok_text": "Yes",
-                          "dismiss_text": "No"
-                      }
+                    "value": "yes"
                 },
               {
                     "name": "option",
