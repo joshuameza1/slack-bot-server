@@ -156,7 +156,7 @@ router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
 
   let payload = JSON.parse(req.body.payload);
-  //console.log(payload);
+  console.log(payload);
   
   if (
       payload.type === "interactive_message" &&
@@ -165,12 +165,12 @@ router.post("/slack/interactions", (req, res) => {
       let user = payload.user;
       let name = user.name;
       let id = user.id;
+      let originalMessageID = payload.original_message.ts
       let actions = payload.actions[0];
       let response = actions.value;
     
       if (response === "yes"){
         //console.log("yes");
-        
         
         const finalFileName = "./src/template_render.json";
 
@@ -198,8 +198,9 @@ router.post("/slack/interactions", (req, res) => {
 
         try {
           // Call the chat.postMessage method using the WebClient
-          const result = web.chat.postMessage({
+          const result = web.chat.update({
             channel: id,
+            ts: originalMessageID,
             "blocks": [{
               "type": "section",
               "text":{
@@ -250,6 +251,22 @@ router.post("/slack/interactions", (req, res) => {
       } else if (response === "no"){
         
         //console.log("no");
+        
+        
+        try {
+          // Call the chat.delete method using the WebClient
+          const result = web.chat.delete({
+            channel: id,
+            ts: originalMessageID
+          });
+
+          console.log(result);
+        }
+        catch (error) {
+          console.error(error);
+        }
+        
+        
       }
   }
   
