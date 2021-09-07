@@ -143,25 +143,22 @@ router.post("/slack/gfx", (req, res) => {
   console.log("Request Form sent to Slack.");
 });
 
+router.post("/slack", (req, res) => {
+  res.status(200).send();
+
+  let payload = JSON.parse(req.body.payload);
+  console.log(payload);
+  
+})
+
+
 router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
 
   let payload = JSON.parse(req.body.payload);
-
-  // view the payload on console
   //console.log(payload);
-  console.log("Request Form submitted from Slack.");
 
-  if (
-    payload.type === "view_submission" &&
-    payload.view.callback_id === "gfx"
-  ) {
-
-router.post("/slack/interactions", (req, res) => {
-  res.status(200).send();
-
-  let payload = JSON.parse(req.body.payload);
-
+  
   // view the payload on console
   //console.log(payload);
   console.log("Request Form submitted from Slack.");
