@@ -198,7 +198,9 @@ router.post("/slack/interactions", (req, res) => {
 
         try {
           // Call the chat.postMessage method using the WebClient
+          console.log(token,id,originalMessageID);
           const result = web.chat.update({
+            token: token,
             channel: id,
             ts: originalMessageID,
             "blocks": [{
