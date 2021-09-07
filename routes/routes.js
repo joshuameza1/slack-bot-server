@@ -149,7 +149,8 @@ router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
 
   let payload = JSON.parse(req.body.payload);
-  console.log(payload);
+  //console.log(payload);
+  
   if (
       payload.type === "interactive_message" &&
       payload.callback_id === "preview_confirmation"
@@ -157,9 +158,16 @@ router.post("/slack/interactions", (req, res) => {
       let user = payload.user;
       let name = user.name;
       let id = user.id;
-      let { values } = payload.view.state;
-      let type = values.type.type.selected_option.value;
-      console.log(values);
+      let actions = payload.actions[0];
+      let response = actions.value;
+    
+      if (response === "yes"){
+        //console.log("yes");
+        
+      } else if (response === "no"){
+        
+        //console.log("no");
+      }
   }
   
   
