@@ -179,14 +179,14 @@ router.post("/slack/interactions", (req, res) => {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
         channel: id,
-        "type": "section",
-        "blocks": [
-        text:{
-          "type": "mrkdwn",
-          "text": "Hey " + name + "! \n\r" + "Your " +
-            chroma_or_alpha + " " + type + " for " + line_one + 
-            "is being rendered and will be uploaded here shortly! :smile:"
-        }
+        "blocks": [{
+          "type": "section",
+          "text":{
+            "type": "mrkdwn",
+            "text": "Hey *" + name + "*! \n\r" + "Your *" +
+              chroma_or_alpha + "* *" + type + "* for *" + line_one + 
+              "* is being rendered and will be uploaded here shortly! :smile:"
+          }}]
       });
 
       //console.log(result);
@@ -227,8 +227,8 @@ router.post("/slack/interactions", (req, res) => {
               {
                   "color": "#36a64f",
                   "pretext": "Your Nameslide has been rendered!",
-                  "title": "Click Here To Download",
-                  "title_link": arg
+                  "title": arg[0],
+                  "title_link": arg[1]
               }
           ]
         });
