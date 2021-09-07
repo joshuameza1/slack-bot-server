@@ -208,8 +208,12 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINEONE*", line_one)
         .replace("*LINETWO*", line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""));
+      
+      var fileName = "GFX5_" + filename.replace(/\s/g, "") + ".mov";
 
-      socket.emit("request", newData);
+      var requestData =  [fileName, newData];
+      
+      socket.emit("request", requestData);
       console.log("Sent JSON Data over to Server");
       
     });
