@@ -143,7 +143,14 @@ router.post("/slack/gfx", (req, res) => {
   console.log("Request Form sent to Slack.");
 });
 
-
+let type = "";
+let chroma_or_alpha = "";
+let line_one = "";
+let new_line_one = "";
+let line_two = "";
+let new_line_two = "";
+let filename = "";
+let codec = "";
 
 router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
@@ -163,6 +170,82 @@ router.post("/slack/interactions", (req, res) => {
     
       if (response === "yes"){
         //console.log("yes");
+        
+        
+        const finalFileName = "./src/template_render.json";
+
+        fs.readFile(finalFileName, "utf8", function(err, data) {
+          if (err) {
+            return console.log(err);
+          }
+          var newFinalData = data
+            .replace("*TYPE*", type)
+            .replace("*CHROMAORALPHA*", chroma_or_alpha)
+            .replace("*LINEONE*", new_line_one)
+            .replace("*LINETWO*", new_line_two)
+            .replace("*FILENAME*", filename.replace(/\s/g, ""))
+            .replace("*CODEC*", codec);
+
+          var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
+
+          socket.emit("requestFinal", [fileName, newFinalData]);
+          console.log("Sent JSON Data over to Server.");
+
+        });
+
+
+        // Send Message to Notify user that thier graphic is rendering.
+
+        try {
+          // Call the chat.postMessage method using the WebClient
+          const result = web.chat.postMessage({
+            channel: id,
+            "blocks": [{
+              "type": "section",
+              "text":{
+                "type": "mrkdwn",
+                "text": "Hey *" + name + "*! \n\r" + "Your *" +
+                  chroma_or_alpha + "* *" + type + "* for *" + line_one + 
+                  "* is being rendered and will be uploaded here shortly! :smile:"
+              }}]
+          });
+
+          console.log("Sent Confirmation Message to Slack.");
+
+        } catch (error) {
+          console.error(error);
+        }
+
+
+        socket.on("finalDone2", arg => {
+          console.log("Render Receieved from Server.");
+          //console.log(data); // world
+          try {
+            // Call the chat.postMessage method using the WebClient
+            const result = web.chat.postMessage({
+              channel: id,
+              attachments: [
+                  {
+                      "color": "#36a64f",
+                      "pretext": "Your " + type + " render has finished!",
+                      "title": arg[0],
+                      "title_link": arg[1]
+                  }
+              ]
+            });
+          } catch (error) {
+            console.error(error);
+          }
+          console.log("Sent Render to Slack.");
+        });
+        
+        
+        
+        
+        
+        
+        
+        
         
       } else if (response === "no"){
         
@@ -184,20 +267,20 @@ router.post("/slack/interactions", (req, res) => {
     let id = user.id;
 
     let { values } = payload.view.state;
-    let type = values.type.type.selected_option.value;
-    let line_one = values.line_one.line_one.value;
-    let new_line_one = line_one.replace(/(\r\n|\n|\r)/gm, "\\r");
+    type = values.type.type.selected_option.value;
+    line_one = values.line_one.line_one.value;
+    new_line_one = line_one.replace(/(\r\n|\n|\r)/gm, "\\r");
     line_one = line_one.replace(/(\r\n|\n|\r)/gm, " ");
-    let line_two = values.line_two.line_two.value;
+    line_two = values.line_two.line_two.value;
     if (line_two == null) {
       line_two = "";
     }
-    let new_line_two = line_two.replace(/(\r\n|\n|\r)/gm, "\\r");
+    new_line_two = line_two.replace(/(\r\n|\n|\r)/gm, "\\r");
     line_two = line_two.replace(/(\r\n|\n|\r)/gm, " ");
     
-    let chroma_or_alpha =
+    chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
-    let codec = "";
+    codec = "";
     switch (chroma_or_alpha) {
         case 'Chroma':
           codec = "3"
@@ -216,7 +299,7 @@ router.post("/slack/interactions", (req, res) => {
         .join(" ");
     }
 
-    let filename = type + "_" + titleCase(line_one.replace("&","And")) + "_" + chroma_or_alpha;
+    filename = type + "_" + titleCase(line_one.replace("&","And")) + "_" + chroma_or_alpha;
     
     //PREVIEW
     
