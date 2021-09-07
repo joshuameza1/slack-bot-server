@@ -162,24 +162,16 @@ router.post("/slack/interactions", (req, res) => {
 
     let { values } = payload.view.state;
     let type = values.type.type.selected_option.value;
-    let line_one = values.line_one.line_one.value.replace(/(\r\n|\n|\r)/gm, "\\r");
-    
-    function findLineBreaks(str){
-      let newStr = str.replace(/(\r\n|\n|\r)/gm, "\\r");
-      var indices = [];
-      for(var i=0; i<newStr.length;i++) {
-          if (newStr[i] === "*") indices.push(i);
-      }
-      return indices;
-    }
-    
-    
-    console.log(line_one);
-    
+    let line_one = values.line_one.line_one.value;
+    let new_line_one = line_one.replace(/(\r\n|\n|\r)/gm, "\\r");
+    line_one = line_one.replace(/(\r\n|\n|\r)/gm, " ");
     let line_two = values.line_two.line_two.value;
     if (line_two == null) {
       line_two = "";
     }
+    let new_line_two = line_two.replace(/(\r\n|\n|\r)/gm, "\\r");
+    line_two = line_two.replace(/(\r\n|\n|\r)/gm, " ");
+    
     let chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
     let codec = "";
@@ -232,8 +224,8 @@ router.post("/slack/interactions", (req, res) => {
       var newData = data
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
-        .replace("*LINEONE*", line_one)
-        .replace("*LINETWO*", line_two)
+        .replace("*LINEONE*", new_line_one)
+        .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
         .replace("*CODEC*", codec);
       
