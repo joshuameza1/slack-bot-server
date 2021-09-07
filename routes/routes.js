@@ -13,6 +13,9 @@ const token = process.env.SLACK_TOKEN;
 const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
+  
+  console.log("Slash Command triggered from Slack.");
+  
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
@@ -135,6 +138,7 @@ router.post("/slack/gfx", (req, res) => {
       }
     });
   })();
+  console.log("Request Form sent to Slack.");
 });
 
 router.post("/slack/interactions", (req, res) => {
@@ -144,6 +148,7 @@ router.post("/slack/interactions", (req, res) => {
 
   // view the payload on console
   //console.log(payload);
+  console.log("Request Form submitted from Slack.");
 
   if (
     payload.type === "view_submission" &&
@@ -188,8 +193,9 @@ router.post("/slack/interactions", (req, res) => {
               "* is being rendered and will be uploaded here shortly! :smile:"
           }}]
       });
-
-      //console.log(result);
+      
+      console.log("Sent Confirmation Message to Slack.");
+      
     } catch (error) {
       console.error(error);
     }
@@ -212,12 +218,12 @@ router.post("/slack/interactions", (req, res) => {
       var requestData =  [fileName, newData];
       
       socket.emit("request", requestData);
-      console.log("Sent JSON Data over to Server");
+      console.log("Sent JSON Data over to Server.");
       
     });
 
     socket.on("done2", arg => {
-      console.log("Render Confirmation Receieved from Server");
+      console.log("Render Receieved from Server.");
       //console.log(data); // world
       try {
         // Call the chat.postMessage method using the WebClient
@@ -226,7 +232,7 @@ router.post("/slack/interactions", (req, res) => {
           attachments: [
               {
                   "color": "#36a64f",
-                  "pretext": "Your Nameslide has been rendered!",
+                  "pretext": "Your" +  + "has been rendered!",
                   "title": arg[0],
                   "title_link": arg[1]
               }
@@ -235,6 +241,7 @@ router.post("/slack/interactions", (req, res) => {
       } catch (error) {
         console.error(error);
       }
+      console.log("Sent Render to Slack.");
     });
   }
 });
