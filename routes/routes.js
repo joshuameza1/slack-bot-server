@@ -227,7 +227,7 @@ router.post("/slack/interactions", (req, res) => {
           "type": "section",
           "text":{
             "type": "mrkdwn",
-            "text": "Hey *" + name + "*! A preview is being produced:+ "Your *" +
+            "text": "Hey *" + name + "*! A preview of your " + type + " is being produced..."
           }}]
       });
       
@@ -236,6 +236,46 @@ router.post("/slack/interactions", (req, res) => {
     } catch (error) {
       console.error(error);
     }
+    
+    socket.on("previewDone2", arg => {
+      console.log("Render Receieved from Server.");
+      //console.log(data); // world
+      try {
+        // Call the chat.postMessage method using the WebClient
+        const result = web.chat.postMessage({
+          channel: id,
+          "text": "Does this preview look correct?",
+          "callback_id": "preview_confirmation",
+          "attachments": [
+        {
+            "color": "#36a64f",
+            "title": arg[0],
+            "title_link": arg[1],
+            "attachment_type": "default",
+            "actions": [
+                {
+                    "name": "option",
+                    "text": "Yes",
+                    "style": "primary",
+                    "type": "button",
+                    "value": "yes"
+                },
+              {
+                    "name": "option",
+                    "text": "No",
+                    "style": "danger",
+                    "type": "button",
+                    "value": "no"
+                }
+            ]
+        }]
+        });
+      } catch (error) {
+        console.error(error);
+      }
+      console.log("Sent Render to Slack.");
+    });
+    
     /*
     const finalFileName = "./src/template_render.json";
 
@@ -257,7 +297,7 @@ router.post("/slack/interactions", (req, res) => {
       console.log("Sent JSON Data over to Server.");
       
     });
-    */
+    
     
     // Send Message to Notify user that thier graphic is rendering.
     
@@ -281,6 +321,7 @@ router.post("/slack/interactions", (req, res) => {
       console.error(error);
     }
     
+    
     socket.on("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       //console.log(data); // world
@@ -302,6 +343,7 @@ router.post("/slack/interactions", (req, res) => {
       }
       console.log("Sent Render to Slack.");
     });
+    */
   }
 });
 
