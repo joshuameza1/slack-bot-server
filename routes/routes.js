@@ -210,7 +210,7 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
       
-      var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
+      var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
       
       socket.emit("requestPreview", [fileName, newPreviewData]);
       console.log("Sent JSON Data over to Server.");
@@ -218,8 +218,7 @@ router.post("/slack/interactions", (req, res) => {
     });
     
 
-    //
-    
+    //SEND Preview for Confirmation
     try {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
@@ -228,9 +227,7 @@ router.post("/slack/interactions", (req, res) => {
           "type": "section",
           "text":{
             "type": "mrkdwn",
-            "text": "Hey *" + name + "*! \n\r" + "Your *" +
-              chroma_or_alpha + "* *" + type + "* for *" + line_one + 
-              "* is being rendered and will be uploaded here shortly! :smile:"
+            "text": "Hey *" + name + "*! A preview is being produced:+ "Your *" +
           }}]
       });
       
@@ -261,6 +258,29 @@ router.post("/slack/interactions", (req, res) => {
       
     });
     */
+    
+    // Send Message to Notify user that thier graphic is rendering.
+    
+    try {
+      // Call the chat.postMessage method using the WebClient
+      const result = web.chat.postMessage({
+        channel: id,
+        "blocks": [{
+          "type": "section",
+          "text":{
+            "type": "mrkdwn",
+            "text": "Hey *" + name + "*! \n\r" + "Your *" +
+              chroma_or_alpha + "* *" + type + "* for *" + line_one + 
+              "* is being rendered and will be uploaded here shortly! :smile:"
+          }}]
+      });
+      
+      console.log("Sent Confirmation Message to Slack.");
+      
+    } catch (error) {
+      console.error(error);
+    }
+    
     socket.on("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       //console.log(data); // world
