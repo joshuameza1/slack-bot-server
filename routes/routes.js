@@ -225,7 +225,14 @@ router.post("/slack/interactions", (req, res) => {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
           channel: id,
-          text: arg
+          attachments: [
+              {
+                  "color": "#36a64f",
+                  "pretext": "Your Nameslide has been rendered!",
+                  "title": "Click Here To Download",
+                  "title_link": arg
+              }
+          ]
         });
       } catch (error) {
         console.error(error);
