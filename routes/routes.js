@@ -193,7 +193,7 @@ router.post("/slack/interactions", (req, res) => {
         .join(" ");
     }
 
-    let filename = type + "_" + titleCase(line_one) + "_" + chroma_or_alpha;
+    let filename = type + "_" + titleCase(line_one.replace("&","And")) + "_" + chroma_or_alpha;
 
     try {
       // Call the chat.postMessage method using the WebClient
@@ -229,11 +229,9 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
         .replace("*CODEC*", codec);
       
-      var fileName = "GFX5_" + filename.replace(/\s/g, "") + ".mov";
-
-      var requestData =  [fileName, newData];
+      var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
       
-      socket.emit("request", requestData);
+      socket.emit("request", [fileName, newData]);
       console.log("Sent JSON Data over to Server.");
       
     });
