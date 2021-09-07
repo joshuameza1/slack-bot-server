@@ -167,7 +167,15 @@ router.post("/slack/interactions", (req, res) => {
     }
     let chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
-
+    let codec = "";
+    switch (chroma_or_alpha) {
+        case 'Chroma':
+          codec = "3"
+          break;
+        case 'Alpha':
+          codec = "4"
+          break;
+    }
     function titleCase(str) {
       return str
         .toLowerCase()
@@ -211,7 +219,8 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", line_one)
         .replace("*LINETWO*", line_two)
-        .replace("*FILENAME*", filename.replace(/\s/g, ""));
+        .replace("*FILENAME*", filename.replace(/\s/g, ""))
+        .replace("*CODEC*", codec);
       
       var fileName = "GFX5_" + filename.replace(/\s/g, "") + ".mov";
 
