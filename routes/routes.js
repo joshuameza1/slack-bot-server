@@ -214,7 +214,7 @@ router.post("/slack/interactions", (req, res) => {
       
     });
 
-    socket.once("done2", arg => {
+    socket.on("done2", arg => {
       console.log("Render Confirmation Receieved from Server");
       //console.log(data); // world
       try {
