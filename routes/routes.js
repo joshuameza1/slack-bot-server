@@ -232,7 +232,7 @@ router.post("/slack/interactions", (req, res) => {
           attachments: [
               {
                   "color": "#36a64f",
-                  "pretext": "Your" +  + "has been rendered!",
+                  "pretext": "Your " + type + " render has finished!",
                   "title": arg[0],
                   "title_link": arg[1]
               }
