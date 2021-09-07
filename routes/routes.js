@@ -194,7 +194,32 @@ router.post("/slack/interactions", (req, res) => {
     }
 
     let filename = type + "_" + titleCase(line_one.replace("&","And")) + "_" + chroma_or_alpha;
+    
+    //PREVIEW
+    
+    const previewFileName = "./src/template_preview.json";
 
+    fs.readFile(previewFileName, "utf8", function(err, data) {
+      if (err) {
+        return console.log(err);
+      }
+      var newPreviewData = data
+        .replace("*TYPE*", type)
+        .replace("*CHROMAORALPHA*", chroma_or_alpha)
+        .replace("*LINEONE*", new_line_one)
+        .replace("*LINETWO*", new_line_two)
+        .replace("*FILENAME*", filename.replace(/\s/g, ""))
+      
+      var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
+      
+      socket.emit("requestPreview", [fileName, newPreviewData]);
+      console.log("Sent JSON Data over to Server.");
+      
+    });
+    
+
+    //
+    
     try {
       // Call the chat.postMessage method using the WebClient
       const result = web.chat.postMessage({
@@ -214,14 +239,14 @@ router.post("/slack/interactions", (req, res) => {
     } catch (error) {
       console.error(error);
     }
+    /*
+    const finalFileName = "./src/template_render.json";
 
-    const fileName = "./src/template_render.json";
-
-    fs.readFile(fileName, "utf8", function(err, data) {
+    fs.readFile(finalFileName, "utf8", function(err, data) {
       if (err) {
         return console.log(err);
       }
-      var newData = data
+      var newFinalData = data
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", new_line_one)
@@ -231,12 +256,12 @@ router.post("/slack/interactions", (req, res) => {
       
       var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
       
-      socket.emit("request", [fileName, newData]);
+      socket.emit("request", [fileName, newFinalData]);
       console.log("Sent JSON Data over to Server.");
       
     });
-
-    socket.on("done2", arg => {
+    */
+    socket.on("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       //console.log(data); // world
       try {
