@@ -79,6 +79,7 @@ router.post("/slack/gfx", (req, res) => {
             block_id: "line_one",
             element: {
               type: "plain_text_input",
+              "multiline": true,
               action_id: "line_one"
             },
             label: {
@@ -92,6 +93,7 @@ router.post("/slack/gfx", (req, res) => {
             block_id: "line_two",
             element: {
               type: "plain_text_input",
+              "multiline": true,
               action_id: "line_two"
             },
             label: {

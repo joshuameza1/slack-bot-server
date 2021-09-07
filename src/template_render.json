@@ -1,6 +1,6 @@
 {
     "template": {
-        "src": "file:///Users/joshua.meza/Dropbox/NexRender/02_ProjectFiles/AfterEffects/GFX5_Overlays.aep",
+        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/GFX5_Overlays.aep",
         "composition": "GFX5_*TYPE*_*CHROMAORALPHA*_Temp"
     },
     "assets": [
