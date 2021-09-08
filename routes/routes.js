@@ -249,7 +249,7 @@ router.post("/slack/interactions", (req, res) => {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
           channel: id,
-          "text": "Does this preview look correct? :eyes:",
+          "text": "Does this preview look correct? :eyes: " + arg[1],
           "attachments": [
         {
             "color": "#36a64f",
