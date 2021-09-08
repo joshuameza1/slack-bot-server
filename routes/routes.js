@@ -240,7 +240,7 @@ router.post("/slack/interactions", (req, res) => {
             "type": "section",
             "text":{
               "type": "mrkdwn",
-              "text": "Hey *" + name + "*! A preview of your " + type + " is being produced..."
+              "text": "Hey *" + name + "*! A preview of your *" + type + "* is being produced! :wink:"
             }}]
         });
         console.log("Sent Confirmation Message to Slack.");
@@ -255,7 +255,7 @@ router.post("/slack/interactions", (req, res) => {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
           channel: id,
-          "text": "Does this preview look correct?",
+          "text": "Does this preview look correct? :eyes:",
           "attachments": [
         {
             "color": "#36a64f",
@@ -348,8 +348,8 @@ router.post("/slack/interactions", (req, res) => {
               "type": "section",
               "text":{
                 "type": "mrkdwn",
-                "text": "Thanks! Your *" + chroma_or_alpha + "* *" + type + "* for *" + line_one + 
-                  "* is currently being rendered! :smile:"
+                "text": "Thanks! Your *" + type + "* for *" + line_one + 
+                  "* is currently being rendered! :muscle:"
               }}]
           });
 
@@ -370,7 +370,7 @@ router.post("/slack/interactions", (req, res) => {
               attachments: [
                   {
                       "color": "#36a64f",
-                      "pretext": "Your " + type + " render has finished!",
+                      "pretext": ":sparkles: Your *" + type + "* is finished rendering! :sparkles:",
                       "title": arg[0],
                       "title_link": arg[1]
                   }
@@ -415,7 +415,7 @@ router.post("/slack/interactions", (req, res) => {
               "type": "section",
               "text":{
                 "type": "mrkdwn",
-                "text": "*Your render has been aborted.*"
+                "text": "*Your render has been canceled. TRY AGAIN* :pensive:"
               }}]
           });
           console.log("Sent Confirmation Message to Slack.");
