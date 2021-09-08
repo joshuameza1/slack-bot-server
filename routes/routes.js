@@ -38,9 +38,6 @@ router.post("/slack/gfx", (req, res) => {
         callback_id: "gfx",
         blocks: [
           {
-            type: "divider"
-          },
-          {
             type: "input",
             block_id: "type",
             element: {
@@ -104,9 +101,6 @@ router.post("/slack/gfx", (req, res) => {
               emoji: true
             },
             optional: true
-          },
-          {
-            type: "divider"
           },
           {
             type: "input",
@@ -248,7 +242,7 @@ router.post("/slack/interactions", (req, res) => {
         console.error(error);
       }
     
-    socket.on("previewDone2", arg => {
+    socket.once("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       //console.log(data); // world
       try {
@@ -360,7 +354,7 @@ router.post("/slack/interactions", (req, res) => {
         }
 
 
-        socket.on("finalDone2", arg => {
+        socket.once("finalDone2", arg => {
           console.log("Render Receieved from Server.");
           //console.log(data); // world
           try {
