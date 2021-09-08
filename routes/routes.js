@@ -234,7 +234,7 @@ router.post("/slack/interactions", (req, res) => {
             "type": "section",
             "text":{
               "type": "mrkdwn",
-              "text": "Hey *" + name + "*! A preview of your *" + type + "* is being produced! :wink:"
+              "text": "Hey *" + name + "*! A preview of your *" + type + "* is being produced!"
             }}]
         });
         console.log("Sent Confirmation Message to Slack.");
@@ -249,7 +249,7 @@ router.post("/slack/interactions", (req, res) => {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
           channel: id,
-          "text": "Does this preview look correct? :eyes: " + arg[1],
+          "text": "Does this preview look correct? :eyes:",
           "attachments": [
         {
             "color": "#36a64f",
