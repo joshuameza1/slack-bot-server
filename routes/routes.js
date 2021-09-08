@@ -156,7 +156,7 @@ router.post("/slack/interactions", (req, res) => {
   res.status(200).send();
 
   let payload = JSON.parse(req.body.payload);
-  console.log(payload);
+  //console.log(payload);
   
   if (
       payload.type === "interactive_message" &&
@@ -171,6 +171,19 @@ router.post("/slack/interactions", (req, res) => {
     
       if (response === "yes"){
         //console.log("yes");
+        
+        try {
+          // Call the chat.delete method using the WebClient
+          const result = web.chat.delete({
+            channel: id,
+            ts: originalMessageID
+          });
+
+          //console.log(result);
+        }
+        catch (error) {
+          console.error(error);
+        }
         
         const finalFileName = "./src/template_render.json";
 
@@ -198,12 +211,9 @@ router.post("/slack/interactions", (req, res) => {
 
         try {
           // Call the chat.postMessage method using the WebClient
-          console.log(token,id,originalMessageID);
-          const result = web.chat.update({
-            token: token,
+          const result = web.chat.postMessage({
             channel: id,
-            ts: originalMessageID,
-            "blocks": [{
+            blocks: [{
               "type": "section",
               "text":{
                 "type": "mrkdwn",
@@ -273,7 +283,6 @@ router.post("/slack/interactions", (req, res) => {
   }
   
   
-  
   // view the payload on console
   console.log("Request Form submitted from Slack.");
 
@@ -299,7 +308,6 @@ router.post("/slack/interactions", (req, res) => {
     
     chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
-    codec = "";
     switch (chroma_or_alpha) {
         case 'Chroma':
           codec = "3"
