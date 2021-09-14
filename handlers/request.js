@@ -1,4 +1,4 @@
 const io = require("socket.io-client");
-let socket = io("https://lyrical-oasis-bathtub.glitch.me");
+let socket = io("https://socket-io-server-heroku.herokuapp.com");
 
 module.exports = socket;
