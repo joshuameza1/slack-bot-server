@@ -262,14 +262,21 @@ router.post("/slack/interactions", (req, res) => {
           text: "Does this preview look correct? :eyes:",
           "attachments": [
           {
-            "type": "image",
-            "title": {
-              "type": "plain_text",
-              "text": "image1",
-              "emoji": true
-            },
-            "image_url": arg[1],
-            "alt_text": "image1"
+            "blocks": [
+              {
+                "type": "image",
+                "title": {
+                  "type": "plain_text",
+                  "text": "image1",
+                  "emoji": true
+                },
+                "image_url": "https://api.slack.com/img/blocks/bkb_template_images/onboardingComplex.jpg",
+                "alt_text": "image1"
+              },
+              {
+                "type": "divider"
+              }
+	          ]
           },
           {
             "color": "#36a64f",
