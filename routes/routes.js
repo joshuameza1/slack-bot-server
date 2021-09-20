@@ -258,19 +258,21 @@ router.post("/slack/interactions", (req, res) => {
       
       try {
       // Call the files.upload method using the WebClient
-          web.files.upload({
-            // channels can be a list of one to many strings
-            channels: id,
-            file: fs.createReadStream('./preview.png')
-          });
-          
+          async () => {
+            await web.files.upload({
+              // channels can be a list of one to many strings
+              channels: id,
+              file: fs.createReadStream('./preview.png')
+            });
           console.log("Image Uploaded Successfully");
+          }
         
           web.chat.postMessage({
           channel: id,
           text: "Does this preview look correct? :eyes:",
           "attachments": [
           {
+            "text": "",
             "color": "#36a64f",
             "callback_id": "preview_confirmation",
             "attachment_type": "default", 
