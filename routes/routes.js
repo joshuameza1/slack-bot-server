@@ -256,18 +256,15 @@ router.post("/slack/interactions", (req, res) => {
         console.log(err);
       });
       
-      try {
-      // Call the files.upload method using the WebClient
-            const result = web.files.upload({
+      async function uploadPreview() {
+        const result = await web.files.upload({
               channel: id,
               // channels can be a list of one to many strings
               file: fs.createReadStream('./preview.png')
             });
-            console.log(result);
-          } catch (error) {
-          console.error(error);
-        }
-        
+        console.log(result);
+        return result;
+      }   
 
         try {
           web.chat.postMessage({
