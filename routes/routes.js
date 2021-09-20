@@ -8,6 +8,7 @@ const fs = require("fs");
 var socket = require("../handlers/request.js");
 
 const token = process.env.SLACK_TOKEN;
+const GFX = process.env.GFX;
 
 // Initialize
 const web = new 
@@ -209,11 +210,13 @@ router.post("/slack/interactions", (req, res) => {
         return console.log(err);
       }
       var newPreviewData = data
+        .replace("*GFX*", GFX)
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", new_line_one)
         .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
+        
       
       var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
       
@@ -317,6 +320,7 @@ router.post("/slack/interactions", (req, res) => {
             return console.log(err);
           }
           var newFinalData = data
+            .replace("*GFX*", GFX)
             .replace("*TYPE*", type)
             .replace("*CHROMAORALPHA*", chroma_or_alpha)
             .replace("*LINEONE*", new_line_one)

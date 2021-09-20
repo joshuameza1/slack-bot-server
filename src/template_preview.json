@@ -1,7 +1,7 @@
 {
     "template": {
-        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/GFX5_Overlays.aep",
-        "composition": "GFX5_Nameslide_*CHROMAORALPHA*_Temp",
+        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/*GFX*_Overlays_Template.aep",
+        "composition": "*GFX*_Nameslide_*CHROMAORALPHA*_Temp",
 
         "frameStart": 120,
         "frameEnd": 120,
