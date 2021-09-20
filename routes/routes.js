@@ -211,6 +211,7 @@ router.post("/slack/interactions", (req, res) => {
       }
       var newPreviewData = data
         .replace("*GFX*", GFX)
+        .replace("*GFX*", GFX)
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", new_line_one)
@@ -320,6 +321,7 @@ router.post("/slack/interactions", (req, res) => {
             return console.log(err);
           }
           var newFinalData = data
+            .replace("*GFX*", GFX)
             .replace("*GFX*", GFX)
             .replace("*TYPE*", type)
             .replace("*CHROMAORALPHA*", chroma_or_alpha)
