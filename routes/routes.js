@@ -265,11 +265,11 @@ router.post("/slack/interactions", (req, res) => {
       }
       
       async function uploadPreview() {
-        const result = await uploadToSlack("./preview.png")
-        return result;
+        const result = await uploadToSlack("./preview.png");
+        console.log(result);
       }   
       
-      console.log(uploadPreview());
+      uploadPreview();
       
         try {
           web.chat.postMessage({
