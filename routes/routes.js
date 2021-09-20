@@ -257,11 +257,11 @@ router.post("/slack/interactions", (req, res) => {
       });
       
       async function uploadToSlack(file) {
-        web.files.upload({
-              channel: id,
-              // channels can be a list of one to many strings
+        let req = web.files.upload({
               file: fs.createReadStream(file)
             });
+        let payload = JSON.parse(req.body.payload);
+        return payload;
       }
       
       async function uploadPreview() {
