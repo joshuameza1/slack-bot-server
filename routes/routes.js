@@ -255,20 +255,20 @@ router.post("/slack/interactions", (req, res) => {
       fs.writeFileSync('preview.png', arg[2], 'base64', (err) => {
         console.log(err);
       });
-      try {
-    // Call the files.upload method using the WebClient
-        const result = web.files.upload({
-          // channels can be a list of one to many strings
-          channels: id,
-          initial_comment: "Here\'s my file :smile:",
-          // Include your filename in a ReadStream here
-          file: fs.createReadStream('./preview.png')
-        });
-        console.log("Image was uploaded");
-      }
-      catch (error) {
-        console.error(error);
-      }
+      async () => {
+        try {
+      // Call the files.upload method using the WebClient
+          await web.files.upload({
+            // channels can be a list of one to many strings
+            channels: id,
+            file: fs.createReadStream('./preview.png')
+          });
+
+        }
+        catch (error) {
+          console.error(error);
+        }
+      };
       
       try {
         // Call the chat.postMessage method using the WebClient
@@ -276,23 +276,6 @@ router.post("/slack/interactions", (req, res) => {
           channel: id,
           text: "Does this preview look correct? :eyes:",
           "attachments": [
-          /*{
-            "blocks": [
-              {
-                "type": "image",
-                "title": {
-                  "type": "plain_text",
-                  "text": arg[0],
-                  "emoji": true
-                },
-                "image_url": "https://drive.google.com/file/d/1ggcL921HkcyS-ntalmsrY9korqpqonUr",
-                "alt_text": arg[0]
-              },
-              {
-                "type": "divider"
-              }
-	          ]
-          },*/
           {
             "color": "#36a64f",
             "callback_id": "preview_confirmation",
