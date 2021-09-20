@@ -249,7 +249,7 @@ router.post("/slack/interactions", (req, res) => {
       console.error(error);
     }
 
-    socket.once("previewDone2", async arg => {
+    socket.once("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       console.log(arg[1]); 
       fs.writeFileSync('preview.png', arg[2], 'base64', (err) => {
@@ -276,7 +276,6 @@ router.post("/slack/interactions", (req, res) => {
             "color": "#36a64f",
             "callback_id": "preview_confirmation",
             "attachment_type": "default", 
-            
             "actions": [
                 {
                     "name": "option",
