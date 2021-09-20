@@ -249,12 +249,31 @@ router.post("/slack/interactions", (req, res) => {
       console.error(error);
     }
 
-    socket.once("previewDone2", arg => {
+    socket.once("previewDone2", async arg => {
       console.log("Render Receieved from Server.");
       console.log(arg[1]); 
       /*fs.writeFile("preview.png", arg[2], "base64", function(err) {
         console.log(err);
       });*/
+      const fileName = "./myFileName.gif";
+      try {
+    // Call the files.upload method using the WebClient
+        const result = web.files.upload({
+          // channels can be a list of one to many strings
+          channels: id,
+          initial_comment: "Here\'s my file :smile:",
+          // Include your filename in a ReadStream here
+          file: fs.createReadStream(arg[2], "base64", function(err) {
+            console.log(err);
+          })
+        });
+
+        console.log(result);
+      }
+      catch (error) {
+        console.error(error);
+      }
+      
       try {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
@@ -270,7 +289,7 @@ router.post("/slack/interactions", (req, res) => {
                   "text": arg[0],
                   "emoji": true
                 },
-                "image_url": arg[1],
+                "image_url": "https://drive.google.com/file/d/1ggcL921HkcyS-ntalmsrY9korqpqonUr",
                 "alt_text": arg[0]
               },
               {
