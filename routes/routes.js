@@ -264,44 +264,44 @@ router.post("/slack/interactions", (req, res) => {
           {
             "blocks": [
               {
+                "color": "#36a64f",
                 "type": "image",
                 "title": {
                   "type": "plain_text",
-                  "text": "image1",
+                  "text": arg[0],
                   "emoji": true
                 },
-                "image_url": "https://api.slack.com/img/blocks/bkb_template_images/onboardingComplex.jpg",
-                "alt_text": "image1"
+                "image_url": arg[1],
+                "alt_text": arg[0]
               },
               {
                 "type": "divider"
+              },
+              {
+                  "color": "#36a64f",
+                  "callback_id": "preview_confirmation",
+                  "attachment_type": "default", 
+
+                  "actions": [
+                      {
+                          "name": "option",
+                          "text": "Yes",
+                          "style": "primary",
+                          "type": "button",
+                          "value": "yes"
+                      },
+                    {
+                          "name": "option",
+                          "text": "No",
+                          "style": "danger",
+                          "type": "button",
+                          "value": "no"
+                      }
+                  ]
               }
 	          ]
-          },
-          {
-            "color": "#36a64f",
-            "title": arg[0],
-            "title_link": arg[1],
-            "callback_id": "preview_confirmation",
-            "attachment_type": "default", 
-            
-            "actions": [
-                {
-                    "name": "option",
-                    "text": "Yes",
-                    "style": "primary",
-                    "type": "button",
-                    "value": "yes"
-                },
-              {
-                    "name": "option",
-                    "text": "No",
-                    "style": "danger",
-                    "type": "button",
-                    "value": "no"
-                }
-            ]
-        }]
+          }
+          ]
         });
       } catch (error) {
         console.error(error);
