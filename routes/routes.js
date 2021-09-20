@@ -264,7 +264,6 @@ router.post("/slack/interactions", (req, res) => {
           {
             "blocks": [
               {
-                "color": "#36a64f",
                 "type": "image",
                 "title": {
                   "type": "plain_text",
@@ -276,32 +275,31 @@ router.post("/slack/interactions", (req, res) => {
               },
               {
                 "type": "divider"
-              },
-              {
-                  "color": "#36a64f",
-                  "callback_id": "preview_confirmation",
-                  "attachment_type": "default", 
-
-                  "actions": [
-                      {
-                          "name": "option",
-                          "text": "Yes",
-                          "style": "primary",
-                          "type": "button",
-                          "value": "yes"
-                      },
-                    {
-                          "name": "option",
-                          "text": "No",
-                          "style": "danger",
-                          "type": "button",
-                          "value": "no"
-                      }
-                  ]
               }
 	          ]
-          }
-          ]
+          },
+          {
+            "color": "#36a64f",
+            "callback_id": "preview_confirmation",
+            "attachment_type": "default", 
+            
+            "actions": [
+                {
+                    "name": "option",
+                    "text": "Yes",
+                    "style": "primary",
+                    "type": "button",
+                    "value": "yes"
+                },
+              {
+                    "name": "option",
+                    "text": "No",
+                    "style": "danger",
+                    "type": "button",
+                    "value": "no"
+                }
+            ]
+        }]
         });
       } catch (error) {
         console.error(error);
