@@ -256,19 +256,17 @@ router.post("/slack/interactions", (req, res) => {
         console.log(err);
       });
       
-      async () => {
+      try {
       // Call the files.upload method using the WebClient
-          await web.files.upload({
+          web.files.upload({
             // channels can be a list of one to many strings
             channels: id,
             file: fs.createReadStream('./preview.png')
           });
-        console.log("File Uploaded successfully");
-        }
-      
-      try {
-        // Call the chat.postMessage method using the WebClient
-        const result = web.chat.postMessage({
+          
+          console.log("Image Uploaded Successfully");
+        
+          web.chat.postMessage({
           channel: id,
           text: "Does this preview look correct? :eyes:",
           "attachments": [
@@ -294,10 +292,12 @@ router.post("/slack/interactions", (req, res) => {
             ]
         }]
         });
-      } catch (error) {
+        
+        } catch (error) {
         console.error(error);
       }
-      console.log("Sent Render to Slack.");
+      
+      
     });
   } else if (
     payload.type === "interactive_message" &&
