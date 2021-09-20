@@ -217,9 +217,10 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINEONE*", new_line_one)
         .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
+        .replace("*GFX*", GFX)
         
       
-      var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
+      var fileName = GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
       
       socket.emit("requestPreview", [fileName, newPreviewData]);
       console.log("Sent JSON Data over to Server.");
@@ -328,9 +329,10 @@ router.post("/slack/interactions", (req, res) => {
             .replace("*LINEONE*", new_line_one)
             .replace("*LINETWO*", new_line_two)
             .replace("*FILENAME*", filename.replace(/\s/g, ""))
+            .replace("*GFX*", GFX)
             .replace("*CODEC*", codec);
 
-          var fileName = "GFX5_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
+          var fileName = GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
 
           socket.emit("requestFinal", [fileName, newFinalData]);
           console.log("Sent JSON Data over to Server.");
