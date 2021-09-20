@@ -255,7 +255,6 @@ router.post("/slack/interactions", (req, res) => {
       /*fs.writeFile("preview.png", arg[2], "base64", function(err) {
         console.log(err);
       });*/
-      const fileName = "./myFileName.gif";
       try {
     // Call the files.upload method using the WebClient
         const result = web.files.upload({
@@ -267,8 +266,7 @@ router.post("/slack/interactions", (req, res) => {
             console.log(err);
           })
         });
-
-        console.log(result);
+        console.log("Image was uploaded");
       }
       catch (error) {
         console.error(error);
@@ -280,7 +278,7 @@ router.post("/slack/interactions", (req, res) => {
           channel: id,
           text: "Does this preview look correct? :eyes:",
           "attachments": [
-          {
+          /*{
             "blocks": [
               {
                 "type": "image",
@@ -296,7 +294,7 @@ router.post("/slack/interactions", (req, res) => {
                 "type": "divider"
               }
 	          ]
-          },
+          },*/
           {
             "color": "#36a64f",
             "callback_id": "preview_confirmation",
