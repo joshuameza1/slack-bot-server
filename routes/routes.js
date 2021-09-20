@@ -252,9 +252,9 @@ router.post("/slack/interactions", (req, res) => {
     socket.once("previewDone2", async arg => {
       console.log("Render Receieved from Server.");
       console.log(arg[1]); 
-      /*fs.writeFile("preview.png", arg[2], "base64", function(err) {
+      fs.writeFileSync('preview.png', arg[2], 'base64', (err) => {
         console.log(err);
-      });*/
+      });
       try {
     // Call the files.upload method using the WebClient
         const result = web.files.upload({
@@ -262,9 +262,7 @@ router.post("/slack/interactions", (req, res) => {
           channels: id,
           initial_comment: "Here\'s my file :smile:",
           // Include your filename in a ReadStream here
-          file: fs.createReadStream(arg[2], "base64", function(err) {
-            console.log(err);
-          })
+          file: fs.createReadStream('./preview.png')
         });
         console.log("Image was uploaded");
       }
