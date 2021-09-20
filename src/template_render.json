@@ -1,7 +1,7 @@
 {
     "template": {
-        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/GFX5_Overlays.aep",
-        "composition": "GFX5_*TYPE*_*CHROMAORALPHA*_Temp"
+        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/*GFX*_Overlays_Template.aep",
+        "composition": "*GFX*_*TYPE*_*CHROMAORALPHA*_Temp"
     },
     "assets": [
         {
