@@ -11,14 +11,11 @@ const token = process.env.SLACK_TOKEN;
 const GFX = process.env.GFX;
 
 // Initialize
-const web = new 
-
-WebClient(token, { retries: 0 });
+const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
-  
   console.log("Slash Command triggered from Slack.");
-  
+
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
@@ -79,7 +76,7 @@ router.post("/slack/gfx", (req, res) => {
             block_id: "line_one",
             element: {
               type: "plain_text_input",
-              "multiline": true,
+              multiline: true,
               action_id: "line_one"
             },
             label: {
@@ -93,7 +90,7 @@ router.post("/slack/gfx", (req, res) => {
             block_id: "line_two",
             element: {
               type: "plain_text_input",
-              "multiline": true,
+              multiline: true,
               action_id: "line_two"
             },
             label: {
@@ -137,7 +134,7 @@ router.post("/slack/gfx", (req, res) => {
       }
     });
   })();
-  
+
   console.log("Request Form sent to Slack.");
 });
 
@@ -155,7 +152,7 @@ router.post("/slack/interactions", (req, res) => {
 
   let payload = JSON.parse(req.body.payload);
   //console.log(payload);
-  
+
   // view the payload on console
   console.log("Request Form submitted from Slack.");
 
@@ -178,16 +175,16 @@ router.post("/slack/interactions", (req, res) => {
     }
     new_line_two = line_two.replace(/(\r\n|\n|\r)/gm, "\\r");
     line_two = line_two.replace(/(\r\n|\n|\r)/gm, " ");
-    
+
     chroma_or_alpha =
       values.chroma_or_alpha.chroma_or_alpha.selected_option.value;
     switch (chroma_or_alpha) {
-        case 'Chroma':
-          codec = "3"
-          break;
-        case 'Alpha':
-          codec = "4"
-          break;
+      case "Chroma":
+        codec = "3";
+        break;
+      case "Alpha":
+        codec = "4";
+        break;
     }
     function titleCase(str) {
       return str
@@ -199,10 +196,15 @@ router.post("/slack/interactions", (req, res) => {
         .join(" ");
     }
 
-    filename = type + "_" + titleCase(line_one.replace("&","And")) + "_" + chroma_or_alpha;
-    
+    filename =
+      type +
+      "_" +
+      titleCase(line_one.replace("&", "And")) +
+      "_" +
+      chroma_or_alpha;
+
     //PREVIEW
-    
+
     const previewFileName = "./src/template_preview.json";
 
     fs.readFile(previewFileName, "utf8", function(err, data) {
@@ -211,51 +213,84 @@ router.post("/slack/interactions", (req, res) => {
       }
       var newPreviewData = data
         .replace("*GFX*", GFX)
-        .replace("*GFX*", GFX)
         .replace("*TYPE*", type)
         .replace("*CHROMAORALPHA*", chroma_or_alpha)
         .replace("*LINEONE*", new_line_one)
         .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
-        .replace("*GFX*", GFX)
-        
-      
-      var fileName = GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
-      
+        .replace("*GFX*", GFX);
+
+      var fileName =
+        GFX +
+        "_" +
+        filename.replace(/\s/g, "").replace("&", "And") +
+        "_Preview.png";
+
       socket.emit("requestPreview", [fileName, newPreviewData]);
       console.log("Sent JSON Data over to Server.");
-      
     });
-    
 
     //SEND Preview for Confirmation
-    
 
-      try {
-        // Call the chat.postMessage method using the WebClient
-        const result = web.chat.postMessage({
-          channel: id,
-          "blocks": [{
-            "type": "section",
-            "text":{
-              "type": "mrkdwn",
-              "text": "Hey *" + name + "*! A preview of your *" + type + "* is being produced!"
-            }}]
-        });
-        console.log("Sent Confirmation Message to Slack.");
-      } catch (error) {
-        console.error(error);
-      }
-    
+    try {
+      // Call the chat.postMessage method using the WebClient
+      const result = web.chat.postMessage({
+        channel: id,
+        blocks: [
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text:
+                "Hey *" +
+                name +
+                "*! A preview of your *" +
+                type +
+                "* is being produced!"
+            }
+          }
+        ]
+      });
+      console.log("Sent Confirmation Message to Slack.");
+    } catch (error) {
+      console.error(error);
+    }
+
     socket.once("previewDone2", arg => {
       console.log("Render Receieved from Server.");
       //console.log(data); // world
+      /*fs.writeFile("preview.png", arg[2], "base64", function(err) {
+        console.log(err);
+      });*/
       try {
         // Call the chat.postMessage method using the WebClient
         const result = web.chat.postMessage({
           channel: id,
-          "text": "Does this preview look correct? :eyes:",
-          "attachments": [
+          text: "Does this preview look correct? :eyes:",
+          attachments: [
+            {
+              fallback: "Plain-text summary of the attachment.",
+              color: "#2eb886",
+              pretext: "Optional text that appears above the attachment block",
+              author_name: "Bobby Tables",
+              author_link: "http://flickr.com/bobby/",
+              author_icon: "http://flickr.com/icons/bobby.jpg",
+              title: "Slack API Documentation",
+              title_link: "https://api.slack.com/",
+              text: "Optional text that appears within the attachment",
+              fields: [
+                {
+                  title: "Priority",
+                  value: "High",
+                  short: false
+                }
+              ],
+              image_url: arg[1],
+              thumb_url: arg[1],
+              footer: "Slack API",
+            }
+          ]
+          /*"attachments": [
         {
             "color": "#36a64f",
             "title": arg[0],
@@ -278,157 +313,147 @@ router.post("/slack/interactions", (req, res) => {
                     "value": "no"
                 }
             ]
-        }]
+        }]*/
         });
       } catch (error) {
         console.error(error);
       }
       console.log("Sent Render to Slack.");
     });
-    
-  }
-  
-  else if (
-      payload.type === "interactive_message" &&
-      payload.callback_id === "preview_confirmation"
-    ) {
-      let user = payload.user;
-      let name = user.name;
-      let id = user.id;
-      let originalMessageID = payload.original_message.ts
-      let actions = payload.actions[0];
-      let response = actions.value;
-    
-      if (response === "yes"){
-        //console.log("yes");
-        
-        try {
-          // Call the chat.delete method using the WebClient
-          const result = web.chat.delete({
-            channel: id,
-            ts: originalMessageID
-          });
+  } else if (
+    payload.type === "interactive_message" &&
+    payload.callback_id === "preview_confirmation"
+  ) {
+    let user = payload.user;
+    let name = user.name;
+    let id = user.id;
+    let originalMessageID = payload.original_message.ts;
+    let actions = payload.actions[0];
+    let response = actions.value;
 
-          //console.log(result);
-        }
-        catch (error) {
-          console.error(error);
-        }
-        
-        const finalFileName = "./src/template_render.json";
+    if (response === "yes") {
+      //console.log("yes");
 
-        fs.readFile(finalFileName, "utf8", function(err, data) {
-          if (err) {
-            return console.log(err);
-          }
-          var newFinalData = data
-            .replace("*GFX*", GFX)
-            .replace("*GFX*", GFX)
-            .replace("*TYPE*", type)
-            .replace("*CHROMAORALPHA*", chroma_or_alpha)
-            .replace("*LINEONE*", new_line_one)
-            .replace("*LINETWO*", new_line_two)
-            .replace("*FILENAME*", filename.replace(/\s/g, ""))
-            .replace("*GFX*", GFX)
-            .replace("*CODEC*", codec);
-
-          var fileName = GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
-
-          socket.emit("requestFinal", [fileName, newFinalData]);
-          console.log("Sent JSON Data over to Server.");
-
+      try {
+        // Call the chat.delete method using the WebClient
+        const result = web.chat.delete({
+          channel: id,
+          ts: originalMessageID
         });
 
+        //console.log(result);
+      } catch (error) {
+        console.error(error);
+      }
 
-        // Send Message to Notify user that thier graphic is rendering.
+      const finalFileName = "./src/template_render.json";
 
+      fs.readFile(finalFileName, "utf8", function(err, data) {
+        if (err) {
+          return console.log(err);
+        }
+        var newFinalData = data
+          .replace("*GFX*", GFX)
+          .replace("*TYPE*", type)
+          .replace("*CHROMAORALPHA*", chroma_or_alpha)
+          .replace("*LINEONE*", new_line_one)
+          .replace("*LINETWO*", new_line_two)
+          .replace("*FILENAME*", filename.replace(/\s/g, ""))
+          .replace("*GFX*", GFX)
+          .replace("*CODEC*", codec);
+
+        var fileName =
+          GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + ".mov";
+
+        socket.emit("requestFinal", [fileName, newFinalData]);
+        console.log("Sent JSON Data over to Server.");
+      });
+
+      // Send Message to Notify user that thier graphic is rendering.
+
+      try {
+        // Call the chat.postMessage method using the WebClient
+        const result = web.chat.postMessage({
+          channel: id,
+          blocks: [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text:
+                  "Thanks! Your *" +
+                  type +
+                  "* for *" +
+                  line_one +
+                  "* is currently being rendered! :muscle:"
+              }
+            }
+          ]
+        });
+
+        console.log("Sent Confirmation Message to Slack.");
+      } catch (error) {
+        console.error(error);
+      }
+
+      socket.once("finalDone2", arg => {
+        console.log("Render Receieved from Server.");
+        //console.log(data); // world
         try {
           // Call the chat.postMessage method using the WebClient
           const result = web.chat.postMessage({
             channel: id,
-            blocks: [{
-              "type": "section",
-              "text":{
-                "type": "mrkdwn",
-                "text": "Thanks! Your *" + type + "* for *" + line_one + 
-                  "* is currently being rendered! :muscle:"
-              }}]
+            attachments: [
+              {
+                color: "#36a64f",
+                pretext:
+                  ":sparkles: Your *" +
+                  type +
+                  "* is finished rendering! :sparkles:",
+                title: arg[0],
+                title_link: arg[1]
+              }
+            ]
           });
-
-          console.log("Sent Confirmation Message to Slack.");
-
         } catch (error) {
           console.error(error);
         }
+        console.log("Sent Render to Slack.");
+      });
+    } else if (response === "no") {
+      //console.log("no");
 
-
-        socket.once("finalDone2", arg => {
-          console.log("Render Receieved from Server.");
-          //console.log(data); // world
-          try {
-            // Call the chat.postMessage method using the WebClient
-            const result = web.chat.postMessage({
-              channel: id,
-              attachments: [
-                  {
-                      "color": "#36a64f",
-                      "pretext": ":sparkles: Your *" + type + "* is finished rendering! :sparkles:",
-                      "title": arg[0],
-                      "title_link": arg[1]
-                  }
-              ]
-            });
-          } catch (error) {
-            console.error(error);
-          }
-          console.log("Sent Render to Slack.");
+      try {
+        // Call the chat.delete method using the WebClient
+        const result = web.chat.delete({
+          channel: id,
+          ts: originalMessageID
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-      } else if (response === "no"){
-        
-        //console.log("no");
-        
-        try {
-          // Call the chat.delete method using the WebClient
-          const result = web.chat.delete({
-            channel: id,
-            ts: originalMessageID
-          });
 
-          console.log(result);
-        }
-        catch (error) {
-          console.error(error);
-        }
-        
-        try {
-        // Call the chat.postMessage method using the WebClient
-          const result = web.chat.postMessage({
-            channel: id,
-            "blocks": [{
-              "type": "section",
-              "text":{
-                "type": "mrkdwn",
-                "text": "*Your render has been canceled. TRY AGAIN* :pensive:"
-              }}]
-          });
-          console.log("Sent Confirmation Message to Slack.");
-        } catch (error) {
-          console.error(error);
-        }
-        
-        
-        
-        
+        console.log(result);
+      } catch (error) {
+        console.error(error);
       }
+
+      try {
+        // Call the chat.postMessage method using the WebClient
+        const result = web.chat.postMessage({
+          channel: id,
+          blocks: [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text: "*Your render has been canceled. TRY AGAIN* :pensive:"
+              }
+            }
+          ]
+        });
+        console.log("Sent Confirmation Message to Slack.");
+      } catch (error) {
+        console.error(error);
+      }
+    }
   }
 });
 
