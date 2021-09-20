@@ -251,17 +251,21 @@ router.post("/slack/interactions", (req, res) => {
 
     socket.once("previewDone2", arg => {
       console.log("Render Receieved from Server.");
-      console.log(arg[1]); 
+      
       fs.writeFileSync('preview.png', arg[2], 'base64', (err) => {
         console.log(err);
       });
       
-      async function uploadPreview() {
-        const result = await web.files.upload({
+      async function uploadToSlack(file) {
+        web.files.upload({
               channel: id,
               // channels can be a list of one to many strings
-              file: fs.createReadStream('./preview.png')
+              file: fs.createReadStream(file)
             });
+      }
+      
+      async function uploadPreview() {
+        const result = await uploadToSlack("./preview.png")
         return result;
       }   
       
