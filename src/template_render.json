@@ -22,7 +22,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Desktop/Client/renders/*GFX*_*FILENAME*.mov",
+                "output": "/Users/joshua.meza/Desktop/Client/renders/*FILENAME*.mov",
                 "params": {"-c:v":"prores_ks", "-profile:v":"*CODEC*"}
             }
         ]

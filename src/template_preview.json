@@ -26,7 +26,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/joshua.meza/Desktop/Client/renders/*GFX*_*FILENAME*_Preview.png",
+                "output": "/Users/joshua.meza/Desktop/Client/renders/*FILENAME*_Preview.png",
                 "params": {"-c:v":"png"}
             }
         ]

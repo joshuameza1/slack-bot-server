@@ -197,11 +197,7 @@ router.post("/slack/interactions", (req, res) => {
     }
 
     filename =
-      type +
-      "_" +
-      titleCase(line_one.replace("&", "And")) +
-      "_" +
-      chroma_or_alpha;
+      GFX + "_" + type + "_" + titleCase(line_one.replace("&", "And")) + "_" + chroma_or_alpha;
 
     //PREVIEW
 
@@ -218,13 +214,9 @@ router.post("/slack/interactions", (req, res) => {
         .replace("*LINEONE*", new_line_one)
         .replace("*LINETWO*", new_line_two)
         .replace("*FILENAME*", filename.replace(/\s/g, ""))
-        .replace("*GFX*", GFX);
 
       var fileName =
-        GFX +
-        "_" +
-        filename.replace(/\s/g, "").replace("&", "And") +
-        "_Preview.png";
+        GFX + "_" + filename.replace(/\s/g, "").replace("&", "And") + "_Preview.png";
 
       socket.emit("requestPreview", [fileName, newPreviewData]);
       console.log("Sent JSON Data over to Server.");
@@ -357,7 +349,6 @@ router.post("/slack/interactions", (req, res) => {
           .replace("*LINEONE*", new_line_one)
           .replace("*LINETWO*", new_line_two)
           .replace("*FILENAME*", filename.replace(/\s/g, ""))
-          .replace("*GFX*", GFX)
           .replace("*CODEC*", codec);
 
         var fileName =
