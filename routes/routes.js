@@ -260,34 +260,24 @@ router.post("/slack/interactions", (req, res) => {
         const result = web.chat.postMessage({
           channel: id,
           text: "Does this preview look correct? :eyes:",
-          attachments: [
-            {
-              fallback: "Plain-text summary of the attachment.",
-              color: "#2eb886",
-              pretext: "Optional text that appears above the attachment block",
-              author_name: "Bobby Tables",
-              title: "Slack API Documentation",
-              text: "Optional text that appears within the attachment",
-              fields: [
-                {
-                  title: "Priority",
-                  value: "High",
-                  short: false
-                }
-              ],
-              image_url: arg[1],
-              thumb_url: arg[1],
-              footer: "Slack API",
-            }
-          ]
-          });
-          /*"attachments": [
-        {
+          "attachments": [
+          {
+            "type": "image",
+            "title": {
+              "type": "plain_text",
+              "text": "image1",
+              "emoji": true
+            },
+            "image_url": arg[1],
+            "alt_text": "image1"
+          },
+          {
             "color": "#36a64f",
             "title": arg[0],
             "title_link": arg[1],
             "callback_id": "preview_confirmation",
-            "attachment_type": "default",
+            "attachment_type": "default", 
+            
             "actions": [
                 {
                     "name": "option",
@@ -304,8 +294,8 @@ router.post("/slack/interactions", (req, res) => {
                     "value": "no"
                 }
             ]
-        }]*/
-        
+        }]
+        });
       } catch (error) {
         console.error(error);
       }
