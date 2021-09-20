@@ -262,10 +262,11 @@ router.post("/slack/interactions", (req, res) => {
               // channels can be a list of one to many strings
               file: fs.createReadStream('./preview.png')
             });
-        console.log(result);
         return result;
       }   
-
+      
+      console.log(uploadPreview());
+      
         try {
           web.chat.postMessage({
           channel: id,
