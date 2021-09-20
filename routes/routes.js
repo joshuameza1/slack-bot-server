@@ -255,20 +255,16 @@ router.post("/slack/interactions", (req, res) => {
       fs.writeFileSync('preview.png', arg[2], 'base64', (err) => {
         console.log(err);
       });
+      
       async () => {
-        try {
       // Call the files.upload method using the WebClient
           await web.files.upload({
             // channels can be a list of one to many strings
             channels: id,
             file: fs.createReadStream('./preview.png')
           });
-
+        console.log("File Uploaded successfully");
         }
-        catch (error) {
-          console.error(error);
-        }
-      };
       
       try {
         // Call the chat.postMessage method using the WebClient
