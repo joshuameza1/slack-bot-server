@@ -258,41 +258,59 @@ router.post("/slack/interactions", (req, res) => {
       
       try {
       // Call the files.upload method using the WebClient
-          async () => {
-            await web.files.upload({
+            const result = web.files.upload({
+              channel: id,
               // channels can be a list of one to many strings
-              channels: id,
               file: fs.createReadStream('./preview.png')
             });
-          console.log("Image Uploaded Successfully");
-          }
+            console.log(result);
+          } catch (error) {
+          console.error(error);
+        }
         
+
+        try {
           web.chat.postMessage({
           channel: id,
           text: "Does this preview look correct? :eyes:",
           "attachments": [
-          {
-            "text": "",
-            "color": "#36a64f",
-            "callback_id": "preview_confirmation",
-            "attachment_type": "default", 
-            "actions": [
+            {
+              "blocks": [
                 {
-                    "name": "option",
-                    "text": "Yes",
-                    "style": "primary",
-                    "type": "button",
-                    "value": "yes"
-                },
-              {
-                    "name": "option",
-                    "text": "No",
-                    "style": "danger",
-                    "type": "button",
-                    "value": "no"
+                  "type": "image",
+                  "title": {
+                    "type": "plain_text",
+                    "text": arg[0],
+                    "emoji": true
+                  },
+                  "image_url": "https://api.slack.com/img/blocks/bkb_template_images/onboardingComplex.jpg",
+                  "alt_text": arg[0]
                 }
-            ]
-        }]
+              ]
+            },
+            {
+              "text": "",
+              "color": "#36a64f",
+              "callback_id": "preview_confirmation",
+              "attachment_type": "default", 
+              "actions": [
+                  {
+                      "name": "option",
+                      "text": "Yes",
+                      "style": "primary",
+                      "type": "button",
+                      "value": "yes"
+                  },
+                {
+                      "name": "option",
+                      "text": "No",
+                      "style": "danger",
+                      "type": "button",
+                      "value": "no"
+                  }
+              ]
+            }
+          ]
         });
         
         } catch (error) {
