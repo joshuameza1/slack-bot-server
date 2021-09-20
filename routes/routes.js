@@ -258,7 +258,7 @@ router.post("/slack/interactions", (req, res) => {
 
     socket.once("previewDone2", arg => {
       console.log("Render Receieved from Server.");
-      //console.log(data); // world
+      console.log(arg[1]); 
       /*fs.writeFile("preview.png", arg[2], "base64", function(err) {
         console.log(err);
       });*/
@@ -273,10 +273,7 @@ router.post("/slack/interactions", (req, res) => {
               color: "#2eb886",
               pretext: "Optional text that appears above the attachment block",
               author_name: "Bobby Tables",
-              author_link: "http://flickr.com/bobby/",
-              author_icon: "http://flickr.com/icons/bobby.jpg",
               title: "Slack API Documentation",
-              title_link: "https://api.slack.com/",
               text: "Optional text that appears within the attachment",
               fields: [
                 {
@@ -290,6 +287,7 @@ router.post("/slack/interactions", (req, res) => {
               footer: "Slack API",
             }
           ]
+          });
           /*"attachments": [
         {
             "color": "#36a64f",
@@ -314,7 +312,7 @@ router.post("/slack/interactions", (req, res) => {
                 }
             ]
         }]*/
-        });
+        
       } catch (error) {
         console.error(error);
       }
