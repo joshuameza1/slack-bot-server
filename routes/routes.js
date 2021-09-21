@@ -221,16 +221,7 @@ router.post("/slack/interactions", (req, res) => {
       socket.emit("requestPreview", [fileName, newPreviewData]);
       console.log("Sent JSON Data over to Server.");
     });
-
-    
-    
-    web.files.upload({
-            channel: id,
-            file: fs.createReadStream("./preview.png")
-            });
-    
-    
-    
+        
     
     //SEND Preview for Confirmation
 
@@ -270,6 +261,7 @@ router.post("/slack/interactions", (req, res) => {
             channel: id,
               file: fs.createReadStream(file)
             });
+        return req;
       }
       
       async function uploadPreview() {
@@ -277,7 +269,7 @@ router.post("/slack/interactions", (req, res) => {
         console.log(result);
       }   
       
-      uploadPreview();
+      
       
         try {
           web.chat.postMessage({
