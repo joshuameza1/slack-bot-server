@@ -280,15 +280,15 @@ router.post("/slack/interactions", async(req, res) => {
           
           const uploadRes = await web.files.upload({
             token:
-              "xoxp-2423150427152-2392778096326-2399634655506-0ee828d366ddcf968a89e9e913cde8ef",
-            file: fs.createReadStream("./preview.png") // Buffer | Stream
+              (process.env.SLACK_BOT_SERVER || "test"),
+             file: fs.createReadStream("./preview.png") // Buffer | Stream
           });
 
           console.log(uploadRes.file.id);
 
           const sharedPublicURLRes = await web.files.sharedPublicURL({
             token:
-              "xoxp-2423150427152-2392778096326-2399634655506-0ee828d366ddcf968a89e9e913cde8ef",
+              (process.env.SLACK_BOT_SERVER || "test"),
             file: uploadRes.file.id
           });
 
