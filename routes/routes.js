@@ -15,7 +15,6 @@ const web = new WebClient(token, { retries: 0 });
 
 router.post("/slack/gfx", (req, res) => {
   console.log("Slash Command triggered from Slack.");
-
   const { trigger_id: triggerId } = req.body;
   //io.client.emit("hello", "world");
   res.status(200).send("");
@@ -223,6 +222,16 @@ router.post("/slack/interactions", (req, res) => {
       console.log("Sent JSON Data over to Server.");
     });
 
+    
+    
+    web.files.upload({
+            channel: id,
+            file: fs.createReadStream("./preview.png")
+            });
+    
+    
+    
+    
     //SEND Preview for Confirmation
 
     try {
@@ -256,17 +265,16 @@ router.post("/slack/interactions", (req, res) => {
         console.log(err);
       });
       
-      async function uploadToSlack(file) {
+      function uploadToSlack(file) {
         let req = web.files.upload({
+            channel: id,
               file: fs.createReadStream(file)
             });
-        let payload = JSON.parse(req.body.payload);
-        return payload;
       }
       
       async function uploadPreview() {
         const result = await uploadToSlack("./preview.png");
-        console.log(result.file.id);
+        console.log(result);
       }   
       
       uploadPreview();
