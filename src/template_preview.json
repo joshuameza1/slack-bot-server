@@ -1,6 +1,6 @@
 {
     "template": {
-        "src": "file:///Users/production/Desktop/Client/_AE_ProjectFile/*GFX*_Overlays_Template.aep",
+        "src": "file:///Users/joshua.meza/Desktop/Client/_AE_ProjectFile/*GFX*_Overlays_Template.aep",
         "composition": "*GFX*_Nameslide_*CHROMAORALPHA*_Temp",
 
         "frameStart": 120,
@@ -26,7 +26,7 @@
         "postrender": [
             {
                 "module": "@nexrender/action-encode",
-                "output": "/Users/production/Desktop/Client/renders/*FILENAME*_Preview.png",
+                "output": "/Users/joshua.meza/Desktop/Client/renders/*FILENAME*_Preview.png",
                 "params": {"-c:v":"png"}
             }
         ]
